@@ -1,0 +1,27 @@
+{
+  "name": "mern-training-proskuryakov",
+  "version": "1.0.0",
+  "description": "MERN Course Project ",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/proskuryakoff/MERN-training-Proskuryakov.git"
+  },
+  "author": "M.Proskuryakov (misha.proskuryakov.99@gmail.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/proskuryakoff/MERN-training-Proskuryakov/issues"
+  },
+  "homepage": "https://github.com/proskuryakoff/MERN-training-Proskuryakov#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^6.0.13"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
