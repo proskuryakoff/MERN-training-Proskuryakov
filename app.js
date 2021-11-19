@@ -1,7 +1,7 @@
 const express = require('express');
 
 mongoose.connect(
-    "mongodb+srv://proskuryakoff:<password>@main-cluster.qja21.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    "mongodb+srv://proskuryakoff:1234567890@main-cluster.qja21.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
     { 
         useNewUrlParser: true , 
         useUnifiedTopology: true  
