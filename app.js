@@ -1,4 +1,6 @@
-const express = require('express');
+const express = require('express'),
+    server = express(),
+    mongoose = require('mongoose');
 
 mongoose.connect(
     "mongodb+srv://proskuryakoff:1234567890@main-cluster.qja21.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
@@ -7,7 +9,5 @@ mongoose.connect(
         useUnifiedTopology: true  
     }
 )
-
-const server = express();
 
 server.listen(3000, () => console.log("Server has been started!"));
