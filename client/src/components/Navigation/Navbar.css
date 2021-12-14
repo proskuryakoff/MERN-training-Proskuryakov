@@ -15,4 +15,19 @@
 
 .Navbar nav {
     height: 100%;
+    display: inherit;
+}
+
+.nav-link{
+    padding: 20px;
+    display: inherit;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    text-decoration: none;
+}
+
+.nav-link:hover {
+    background-color: rgb(86, 21, 148);
+    color: white;
 }

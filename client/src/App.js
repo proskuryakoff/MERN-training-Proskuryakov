@@ -10,9 +10,7 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Layout>
-          <h1>HelloWorld!</h1>
           {routes}
-          <Button>Hello</Button>
         </Layout>
       </div>
     </BrowserRouter>

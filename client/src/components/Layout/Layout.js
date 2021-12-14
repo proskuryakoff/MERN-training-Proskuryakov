@@ -1,10 +1,11 @@
 import Aux from "../../hoc/Auxil";
 import Navbar from "../Navigation/Navbar";
+import './Layout.css'
 
 const layout = (props) => (
     <Aux>
-        {/* <Navbar/> */}
-        <main>
+        <Navbar/>
+        <main className="Content">
             {props.children}
         </main>
     </Aux>

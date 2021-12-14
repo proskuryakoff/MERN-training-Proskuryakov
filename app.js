@@ -6,6 +6,9 @@ const express = require("express"),
 
 app.use('/api/auth', require('./routes/auth'));
 
+app.use(express.json({extended: true}));
+
+
 mongoose.connect(
   "mongodb+srv://proskuryakoff:1234567890@main-cluster.qja21.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
   {

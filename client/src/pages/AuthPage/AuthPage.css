@@ -1,6 +1,6 @@
 .auth-form{
     width: 300px;
-    margin: 20px 50px;
+    margin: 20px 40%;
     padding: 20px;
     border: 1px solid rgb(108, 9, 236);
     border-radius: 0.5rem;
@@ -19,4 +19,13 @@
 
 .input-field label{
     font-size: 0.8rem;
+}
+
+.form-field {
+    margin: 10px 0;
+}
+
+h1{
+   text-align: center;
+   margin-top: 0; 
 }

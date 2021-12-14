@@ -136,3 +136,12 @@
     background: #00a151;
   }
   
+.search-button{
+  width: 50px;
+  border: none;
+  background-color: rgb(197, 166, 255);
+}
+
+.search-button:hover{
+  background-color: rgb(162, 136, 209);
+}
