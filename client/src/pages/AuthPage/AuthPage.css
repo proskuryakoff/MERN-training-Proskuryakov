@@ -1,0 +1,22 @@
+.auth-form{
+    width: 300px;
+    margin: 20px 50px;
+    padding: 20px;
+    border: 1px solid rgb(108, 9, 236);
+    border-radius: 0.5rem;
+}
+
+.card-action{
+    display: flex;
+    width: 70%;
+    justify-content: space-between;
+}
+
+.input-field{
+    display: flex;
+    flex-direction: column;
+}
+
+.input-field label{
+    font-size: 0.8rem;
+}

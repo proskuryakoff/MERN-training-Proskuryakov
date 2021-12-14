@@ -3,7 +3,7 @@ import Navbar from "../Navigation/Navbar";
 
 const layout = (props) => (
     <Aux>
-        <Navbar/>
+        {/* <Navbar/> */}
         <main>
             {props.children}
         </main>

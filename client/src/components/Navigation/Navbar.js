@@ -1,7 +1,9 @@
-import classes from './Navbar.css'
+import React from 'react';
 
-const navbar = (props) => (
-    <header className={classes.Navbar}>
+import './Navbar.css'
+
+const navbar = props => (
+    <header className='Navbar'>
         <div>Menu</div>
         <div>Logo</div>
         <nav>...</nav>

@@ -1,6 +1,10 @@
 const express = require("express"),
-  server = express(),
+  path = require('path'),
+  app = express(),
+  bodyParser = require('body-parser'),
   mongoose = require("mongoose");
+
+app.use('/api/auth', require('./routes/auth'));
 
 mongoose.connect(
   "mongodb+srv://proskuryakoff:1234567890@main-cluster.qja21.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
@@ -8,6 +12,12 @@ mongoose.connect(
     useNewUrlParser: true,
     useUnifiedTopology: true,
   }
-);
+)
+.then(result =>{
+  app.listen(4000, () => console.log('Server has been started!'));
+})
+.catch(err => console.log(err));
 
-server.listen(4000, () => console.log("Server has been started!"));
+
+
+// app.listen(4000, () => console.log("Server has been started!"));
