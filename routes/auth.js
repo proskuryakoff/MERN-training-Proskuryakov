@@ -13,7 +13,7 @@ router.post('/register',
     ], 
     async (req, res) => {
     try{
-        
+        console.log(req.body);
         const validationErrors = validationResult(req)
         if (!validationErrors.isEmpty()){
             return res.status(400).json({
@@ -32,7 +32,6 @@ router.post('/register',
         const user = new User ({email, password: hashedPassword});
 
         await user.save();
-
         res.status(201).json({message: 'User was created'})
     }
     catch(err){

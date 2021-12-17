@@ -3,17 +3,26 @@ import {BrowserRouter} from 'react-router-dom';
 import Layout from "./components/Layout/Layout";
 import Button from "./components/Button/Button";
 import { useRoutes } from './Routes'
+import { useAuth } from './hooks/auth.hook';
+import { AuthContext } from './context/AuthContext';
 
 function App() {
-  const routes = useRoutes(false);
+  const {token, login, logout, userId} = useAuth();
+  const isAuthenticated = !!token;
+  const routes = useRoutes(isAuthenticated);
   return (
-    <BrowserRouter>
-      <div className="App">
-        <Layout>
-          {routes}
-        </Layout>
-      </div>
-    </BrowserRouter>
+    <AuthContext.Provider value={
+      token, login, logout, userId, isAuthenticated
+    }>
+      <BrowserRouter>
+        <div className="App">
+          <Layout>
+            {routes}
+          </Layout>
+        </div>
+      </BrowserRouter>
+    </AuthContext.Provider>
+    
   );
 }
 
