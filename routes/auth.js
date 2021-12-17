@@ -13,7 +13,7 @@ router.post('/register',
     ], 
     async (req, res) => {
     try{
-        console.log(req.body);
+        console.log('Body: ', req.body);
         const validationErrors = validationResult(req)
         if (!validationErrors.isEmpty()){
             return res.status(400).json({

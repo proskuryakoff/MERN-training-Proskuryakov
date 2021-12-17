@@ -1,7 +1,6 @@
 import React from 'react';
 import {BrowserRouter} from 'react-router-dom';
 import Layout from "./components/Layout/Layout";
-import Button from "./components/Button/Button";
 import { useRoutes } from './Routes'
 import { useAuth } from './hooks/auth.hook';
 import { AuthContext } from './context/AuthContext';

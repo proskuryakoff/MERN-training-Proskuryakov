@@ -4,7 +4,9 @@ import './Navbar.css'
 
 const navbar = props => (
     <header className='Navbar'>
-        <div>Menu</div>
+        <nav>
+            <a href='/' className='nav-link'>Home</a>               
+        </nav>
         <Search />
         <nav>
             <a href='/api/auth/login' className='nav-link'>Login</a>
