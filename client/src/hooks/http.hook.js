@@ -22,15 +22,15 @@ export const useHttp = () => {
 
                 return data;
             }
-            catch(err){
+            catch(error){
                 setLoading(false);
-                setError(err.message);
-                console.log(err);
-                throw err;
+                setError(error.message);
+                console.log(error);
+                throw error;
             }
         }
     )
 
     const clearError = () => setError(null);
-    return {loading, request}
+    return {loading, request, error, clearError}
 }

@@ -1,17 +1,18 @@
 import React from 'react';
 import Search from '../Search/Search'
+import { NavLink } from 'react-router-dom';
 import './Navbar.css'
+
 
 const navbar = props => (
     <header className='Navbar'>
-        <nav>
-            <a href='/' className='nav-link'>Home</a>               
-        </nav>
+        <NavLink to="/" className='nav-link'>Home</NavLink>
         <Search />
-        <nav>
-            <a href='/api/auth/login' className='nav-link'>Login</a>
-            <a href='/api/auth/register' className='nav-link'>Register</a>
-        </nav>
+        <div className='auth-nav'>
+            <NavLink to='/api/auth/login' className='nav-link'>Log In</NavLink>
+            <NavLink to='/api/auth/register' className='nav-link'>Register</NavLink>
+            <a href='/' className='nav-link'>Logout</a>
+        </div>
     </header>
 )
 

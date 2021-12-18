@@ -5,7 +5,7 @@ import { AuthContext } from '../../context/AuthContext';
 import { useHttp } from '../../hooks/http.hook';
 import './AuthPage.css';
 
-export const AuthPage = () => {
+export const LoginPage = () => {
     const auth = useContext(AuthContext);
     const {loading, request} = useHttp();
     const [form,setForm] = useState({
@@ -17,16 +17,6 @@ export const AuthPage = () => {
         setForm({...form, [event.target.name]: event.target.value})
     }
 
-    const registerHandler = async() => {
-        try{
-            const data = await request('/api/auth/register', 'POST', {...form})
-            console.log(data)
-        }
-        catch(err){
-            console.log(err);
-            throw err;
-        }
-    }
     const loginHandler = async() => {
         try{
             const data = await request('/api/auth/login', 'POST', {...form});
@@ -40,7 +30,7 @@ export const AuthPage = () => {
 
     return (
         <div className='auth-form'>
-            <h1>Auth</h1>
+            <h1>Log In</h1>
             <div className='form-field'>
                 <div className='input-field'>
                     <label htmlFor='email'>Email</label>
@@ -65,7 +55,6 @@ export const AuthPage = () => {
             </div>
             <div className='card-action'>
                 <Button onClick={loginHandler} disabled={loading}  className='Button'>Log in</Button>
-                <Button onClick={registerHandler} disabled={loading} className='Button'>Registration</Button>
             </div>
         </div>
     )
