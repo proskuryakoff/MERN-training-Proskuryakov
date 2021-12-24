@@ -1,4 +1,5 @@
 import React, {useContext, useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button/Button'
 import Input from '../../components/Input/Input'
 import { AuthContext } from '../../context/AuthContext';
@@ -6,6 +7,7 @@ import { useHttp } from '../../hooks/http.hook';
 import './AuthPage.css';
 
 export const RegisterPage = () => {
+    const navigate = useNavigate()
     const auth = useContext(AuthContext);
     const {loading, request, error, clearError} = useHttp();
     const [form,setForm] = useState({
@@ -19,8 +21,9 @@ export const RegisterPage = () => {
 
     const registerHandler = async() => {
         try{
-            const data = await request('/api/auth/register', 'POST', {...form})
+            const data = await request('/auth/register', 'POST', {...form})
             console.log(data)
+            navigate('/', {replace: true})
         }
         catch(err){
             console.log(err);

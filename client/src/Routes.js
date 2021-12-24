@@ -19,8 +19,8 @@ export const useRoutes = isAuth => {
 
     return(
         <Routes>
-            <Route path='/api/auth/login' element={<LoginPage/>} exact/>
-            <Route path='/api/auth/register' element={<RegisterPage/>} exact/>
+            <Route path='/auth/login' element={<LoginPage/>} exact/>
+            <Route path='/auth/register' element={<RegisterPage/>} exact/>
             <Route path='/' element={<Feed/>} exact />
             <Route path='*' element={<Navigate to='/' />} />
         </Routes>

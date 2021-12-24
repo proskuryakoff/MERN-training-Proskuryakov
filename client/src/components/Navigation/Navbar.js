@@ -1,19 +1,29 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Search from '../Search/Search'
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import './Navbar.css'
+import { AuthContext } from '../../context/AuthContext';
+    
+const Navbar = props => {
+    const navigate = useNavigate()
+    const auth = useContext(AuthContext)
 
+    const logoutHandler = event => {
+        event.preventDefault()
+        auth.logout()
+        navigate('/', {replace: true})
+    }
+    return(
+        <header className='Navbar'>
+            <NavLink to="/" className='nav-link'>Home</NavLink>
+            <Search />
+            <div className='auth-nav'>
+                <NavLink to='/auth/login' className='nav-link'>Log In</NavLink>
+                <NavLink to='/auth/register' className='nav-link'>Register</NavLink>
+                <NavLink to='/auth/logout' className='nav-link' onClick={logoutHandler}>Logout</NavLink>
+            </div>
+        </header>
+    )
+}
 
-const navbar = props => (
-    <header className='Navbar'>
-        <NavLink to="/" className='nav-link'>Home</NavLink>
-        <Search />
-        <div className='auth-nav'>
-            <NavLink to='/api/auth/login' className='nav-link'>Log In</NavLink>
-            <NavLink to='/api/auth/register' className='nav-link'>Register</NavLink>
-            <a href='/' className='nav-link'>Logout</a>
-        </div>
-    </header>
-)
-
-export default navbar;
+export default Navbar;
