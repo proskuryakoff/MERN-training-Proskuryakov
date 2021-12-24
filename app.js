@@ -1,9 +1,10 @@
-const express = require("express"),
-  config = require('config'),
-  path = require('path'),
-  app = express(),
-  bodyParser = require('body-parser'),
-  mongoose = require("mongoose");
+const express = require("express");
+const app = express();
+const mongoose = require("mongoose");
+const config = require('config');
+const path = require('path');
+const bodyParser = require('body-parser');
+const authRouter = require('./routes/auth');
 
 const PORT = config.get('port');
 const MONGO_URI = config.get('mongoUri');
@@ -11,7 +12,7 @@ const MONGO_URI = config.get('mongoUri');
 //Middleware
 app.use(express.json({extended: true}));
 
-app.use('/api/auth', require('./routes/auth'));
+app.use('/auth', authRouter);
 
 //Server connection
 mongoose.connect(

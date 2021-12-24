@@ -1,7 +1,6 @@
 const {Schema, model, Types} = require('mongoose');
 
 const userSchema = new Schema({
-    role: String,
     email:{
         type: String,
         required: true,
@@ -12,6 +11,10 @@ const userSchema = new Schema({
         required: true
     }, 
     username: String,
+    roles: [{
+        type: String, 
+        ref: 'Role'
+    }],
     playlists: [{type: Types.ObjectId, ref: 'Playlist'}],       //fix
     liked: [{type: Types.ObjectId}]     //fix
 })

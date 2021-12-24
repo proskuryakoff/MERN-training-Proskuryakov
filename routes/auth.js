@@ -1,83 +1,17 @@
 const {Router} = require('express');
-const router = Router();
-const User = require('../models/user');
-const bcrypt = require('bcryptjs');
-const {check, validationResult} = require('express-validator');
-const jwt = require('jsonwebtoken');
-const config = require('config');
+const router = new Router();
+const {check} = require('express-validator');
+const { route } = require('express/lib/application');
+const controller = require('../controllers/auth');
+const authMiddleware = require('../middleware/authMiddleware')
+const roleMiddleware = require('../middleware/roleMiddleware')
 
-// /api/auth
-router.post('/register',
-    [
-        check('email', 'Email is incorrect').isEmail(),
-        check('password', 'Minimum length of password is 5 symbols').isLength({min: 5})
-    ], 
-    async (req, res) => {
-    try{
-        console.log('Body: ', req.body);
-        const validationErrors = validationResult(req)
-        if (!validationErrors.isEmpty()){
-            return res.status(400).json({
-                errors: validationErrors.array(),
-                message: 'Registration data is incorrect!'
-            })
-        }
-        
-        const {email, password} = req.body;
-        const candidate = await User.findOne({email});
-        if (candidate){
-            res.status(400).json({message: 'This user exists already'})
-        }
-        
-        const hashedPassword = await bcrypt.hash(password, 12);
-        const user = new User ({email, password: hashedPassword});
-
-        await user.save();
-        res.status(201).json({message: 'User was created'})
-    }
-    catch(err){
-        res.status(500).json({message: 'Something is wrong!'})
-    }
-})
-
-router.post('/login', 
-    [
-        check('email', 'Please enter correct email').normalizeEmail().isEmail(),
-        check('password', 'Please enter password').exists()
-    ],
-    async (req, res) => {
-    try{
-        const validationErrors = validationResult(req)
-        if (!validationErrors.isEmpty()){
-            return res.status(400).json({
-                errors: validationErrors.array(),
-                message: 'Login data is incorrect!'
-            })
-        }
-        
-        const {email, password} = req.body;
-        const user = await User.findOne({ email });
-        if (!user){
-            return res.status(400).json({ message: 'User is not found'});
-        }
-
-        const isMatch = await bcrypt.compare(password, user.password);
-        if(!isMatch){
-            return res.status(400).json({ message: 'Password is incorrect. Try again'})
-        }
-
-        const token = jwt.sign(
-            { userId: user.id },
-            config.get('jwtSecret'),
-            { expiresIn: '1h' }
-        )
-
-        res.json({ token, userId: user.id})
-
-    }
-    catch(err){
-        res.status(500).json({message: 'Something is wrong!'})
-    }
-})
+router.post('/register', [
+    check('email', 'Email should not empty').notEmpty(),
+    check('email', 'Email is incorrect').isEmail(),
+    check('password', 'Minimum length of password is 5 symbols').isLength({min: 5})
+], controller.register)
+router.post('/login', controller.login)
+router.get('/users', roleMiddleware(['ADMIN']),controller.getUsers)
 
 module.exports = router;  
