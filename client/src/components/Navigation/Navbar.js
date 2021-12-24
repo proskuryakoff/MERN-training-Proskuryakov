@@ -16,11 +16,15 @@ const Navbar = props => {
     return(
         <header className='Navbar'>
             <NavLink to="/" className='nav-link'>Home</NavLink>
+            <NavLink to="/create" className='nav-link'>Create Post</NavLink>
             <Search />
             <div className='auth-nav'>
-                <NavLink to='/auth/login' className='nav-link'>Log In</NavLink>
                 <NavLink to='/auth/register' className='nav-link'>Register</NavLink>
-                <NavLink to='/auth/logout' className='nav-link' onClick={logoutHandler}>Logout</NavLink>
+                {props.isAuthenticated
+                    ? <NavLink to='/auth/logout' className='nav-link' onClick={logoutHandler}>Logout</NavLink>
+                    : <NavLink to='/auth/login' className='nav-link'>Log In</NavLink> 
+             
+                }
             </div>
         </header>
     )

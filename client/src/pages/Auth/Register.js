@@ -2,6 +2,7 @@ import React, {useContext, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button/Button'
 import Input from '../../components/Input/Input'
+import Form from '../../components/Form/Form';
 import { AuthContext } from '../../context/AuthContext';
 import { useHttp } from '../../hooks/http.hook';
 import './AuthPage.css';
@@ -33,8 +34,7 @@ export const RegisterPage = () => {
 
     return (
         <div className='auth-form'>
-            <h1>Register an Account</h1>
-            <div className='form-field'>
+            <Form title='Register an Account'>
                 <div className='input-field'>
                     <label htmlFor='email'>Email</label>
                     <Input placeholder='Your email' 
@@ -55,7 +55,17 @@ export const RegisterPage = () => {
                         onChange={changeHandler}
                     />
                 </div>
-            </div>
+                <div className='input-field'>
+                    <label htmlFor='username'>Username</label>
+                    <Input placeholder='Your username' 
+                        className='default-input'
+                        id='username'
+                        name='username'
+                        type='username'
+                        onChange={changeHandler}
+                    />
+                </div>
+            </Form>
             <div className='card-action'>
                 <Button onClick={registerHandler} disabled={loading} className='Button'>Registration</Button>
             </div>

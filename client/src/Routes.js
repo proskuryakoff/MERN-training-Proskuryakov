@@ -12,7 +12,8 @@ export const useRoutes = isAuth => {
             <Routes>
                 <Route path='/create' element={<CreatePage/>} exact />
                 <Route path='/:id' element={<SinglePost/>} />
-                <Route path='*' element={<Navigate to ='/create' />} />
+                <Route path='/' element={<Feed/>} exact />
+                <Route path='*' element={<Navigate to ='/' />} />
             </Routes>
         )
     }

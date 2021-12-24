@@ -15,13 +15,12 @@ function App() {
     }}>
       <BrowserRouter>
         <div className="App">
-          <Layout>
+          <Layout isAuthenticated={isAuthenticated}>
             {routes}
           </Layout>
         </div>
       </BrowserRouter>
     </AuthContext.Provider>
-    
   );
 }
 

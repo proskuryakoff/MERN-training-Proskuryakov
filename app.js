@@ -5,6 +5,7 @@ const config = require('config');
 const path = require('path');
 const bodyParser = require('body-parser');
 const authRouter = require('./routes/auth');
+const feedRouter = require('./routes/feed');
 
 const PORT = config.get('port');
 const MONGO_URI = config.get('mongoUri');
@@ -13,6 +14,7 @@ const MONGO_URI = config.get('mongoUri');
 app.use(express.json({extended: true}));
 
 app.use('/auth', authRouter);
+app.use('/', feedRouter);
 
 //Server connection
 mongoose.connect(
