@@ -33,8 +33,8 @@ export const RegisterPage = () => {
     }
 
     return (
-        <div className='auth-form'>
-            <Form title='Register an Account'>
+        <Form title='Register an Account'>
+            <div className='form-field'>
                 <div className='input-field'>
                     <label htmlFor='email'>Email</label>
                     <Input placeholder='Your email' 
@@ -65,10 +65,10 @@ export const RegisterPage = () => {
                         onChange={changeHandler}
                     />
                 </div>
-            </Form>
+            </div>
             <div className='card-action'>
                 <Button onClick={registerHandler} disabled={loading} className='Button'>Registration</Button>
             </div>
-        </div>
+        </Form>
     )
 }

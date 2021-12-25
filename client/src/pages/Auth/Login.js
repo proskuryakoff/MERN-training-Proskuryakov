@@ -1,6 +1,7 @@
 import React, {useContext, useState} from 'react';
 import Button from '../../components/Button/Button'
 import Input from '../../components/Input/Input'
+import Form from '../../components/Form/Form'
 import { AuthContext } from '../../context/AuthContext';
 import { useHttp } from '../../hooks/http.hook';
 import './AuthPage.css';
@@ -29,8 +30,7 @@ export const LoginPage = () => {
     }
 
     return (
-        <div className='auth-form'>
-            <h1>Log In</h1>
+        <Form title='Log In'>
             <div className='form-field'>
                 <div className='input-field'>
                     <label htmlFor='email'>Email</label>
@@ -56,6 +56,6 @@ export const LoginPage = () => {
             <div className='card-action'>
                 <Button onClick={loginHandler} disabled={loading}  className='Button'>Log in</Button>
             </div>
-        </div>
+        </Form>
     )
 }
