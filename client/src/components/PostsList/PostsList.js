@@ -6,7 +6,7 @@ export const PostsList = ({ posts }) => {
   if (!posts.length) {
     return <p>We have no posts yet!</p>
   }
-  console.log("Posts: ", posts)
+
   return (
     <div>
         { posts.map((post) => {
