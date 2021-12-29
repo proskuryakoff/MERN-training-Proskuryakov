@@ -1,6 +1,6 @@
 import React, {useState, useCallback, useEffect} from "react";
 import { useHttp } from '../../hooks/http.hook';
-// import Loader from '../../components/Loader/Loader'
+import Loader from '../../components/Loader/Loader'
 import { PostsList } from "../../components/PostsList/PostsList";
 
 
@@ -9,7 +9,7 @@ export const Feed = () => {
     const {loading, request} = useHttp();
     const fetchPosts = useCallback(async () => {
         try {
-          const fetched = await request('http://localhost:4000/', 'GET', null, {})
+          const fetched = await request('/', 'GET', null, {})
           setPosts(fetched)
         } catch (err) {
           console.log(err);
@@ -21,12 +21,12 @@ export const Feed = () => {
         fetchPosts()
       }, [fetchPosts])
     
-    // if (loading) {
-    //     return <Loader/>
-    // }
+    if (loading) {
+        return <Loader/>
+    }
     return(
     <>
-      {/* {!loading && <PostsList posts={posts} />} */}
+      {!loading && <PostsList posts={posts} />}
       <PostsList posts={posts} />
     </>
     )
