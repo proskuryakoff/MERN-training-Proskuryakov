@@ -1,9 +1,10 @@
 import React from "react";
+import {Link} from 'react-router-dom'
 import './Card.css'
 
 const Card = (props) => (
     <div className="card">
-        <h1>{props.title}</h1>
+        <Link to={props.id}>{props.title}</Link>
         <div>{props.content}</div>
     </div>
 )

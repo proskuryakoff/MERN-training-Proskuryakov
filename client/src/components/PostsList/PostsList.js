@@ -1,5 +1,4 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
 import Card from '../Card/Card'
 
 export const PostsList = ({ posts }) => {
@@ -12,6 +11,7 @@ export const PostsList = ({ posts }) => {
         { posts.map((post) => {
             return (
                 <Card 
+                id={post._id}
                 title={post.title} 
                 content={post.content}/>
             )
