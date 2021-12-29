@@ -9,8 +9,8 @@ export const Feed = () => {
     const {loading, request} = useHttp();
     const fetchPosts = useCallback(async () => {
         try {
-          const fetched = await request('/', 'GET', null, {})
-          setPosts(fetched)
+          const fetched = await request('http://localhost:4000/', 'GET', null, {})
+          setPosts([...fetched])
         } catch (err) {
           console.log(err);
           throw err;
@@ -26,8 +26,7 @@ export const Feed = () => {
     }
     return(
     <>
-      {!loading && <PostsList posts={posts} />}
-      <PostsList posts={posts} />
+      { !loading && <PostsList posts={posts} />}
     </>
     )
 }
