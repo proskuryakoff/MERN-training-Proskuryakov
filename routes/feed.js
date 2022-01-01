@@ -5,6 +5,8 @@ const controller = require('../controllers/feed');
 const authMiddleware = require('../middleware/authMiddleware');
 const roleMiddleware = require('../middleware/roleMiddleware');
 
+router.get('/:id', controller.getPost);
+
 router.get('/', controller.getPosts);
 
 router.post('/', [

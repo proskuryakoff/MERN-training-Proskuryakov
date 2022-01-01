@@ -9,15 +9,27 @@ export const useAuth = () => {
     const login = useCallback((jwtToken, id) => {
         setToken(jwtToken);
         setUserId(id);
+        const remainingMilliseconds = 60 * 60 * 1000;
+        const expiryDate = new Date(
+          new Date().getTime() + remainingMilliseconds
+        );
         localStorage.setItem(storageName, JSON.stringify({
             userId: id, 
-            token: jwtToken
+            token: jwtToken,
+            expiryDate: expiryDate.toISOString()
         }));
+        setAutoLogout(remainingMilliseconds);
     }, [])
     const logout = useCallback(() => {
         setToken(null);
         setUserId(null);
         localStorage.removeItem(storageName);
+    }, [])
+
+    const setAutoLogout = useCallback((milliseconds) => {
+        setTimeout(() => {
+            logout();
+          }, milliseconds);
     }, [])
 
     useEffect(() => {
@@ -28,5 +40,5 @@ export const useAuth = () => {
         }
     }, [login])
 
-    return {login, logout, token, userId}
+    return {login, logout, setAutoLogout,token, userId}
 }

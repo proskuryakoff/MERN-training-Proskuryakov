@@ -14,6 +14,19 @@ exports.getPosts = async (req, res) => {
     }  
 }
 
+exports.getPost = async (req, res) => {
+    const postId = req.params.id;
+    try{
+        Post.findById(postId)
+        .then(post => {
+            res.status(200).json(post);
+          })
+    } catch (err) {
+        console.log(err);
+        res.status(400).json({message: "Error of fetching current post"})
+    }  
+}
+
 exports.createPost = async (req, res) => {
     try{
         const validationErrors = validationResult(req)
