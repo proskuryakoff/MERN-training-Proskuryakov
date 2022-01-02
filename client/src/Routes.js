@@ -10,9 +10,9 @@ export const useRoutes = isAuth => {
     if (isAuth){
         return(
             <Routes>
-                <Route path='/create' element={<CreatePage/>} exact />
-                <Route path='/:id' element={<SinglePost/>} />
                 <Route path='/' element={<Feed/>} exact />
+                <Route path='/post/:id' element={<SinglePost/>} />
+                <Route path='/create' element={<CreatePage/>} exact />
                 <Route path='*' element={<Navigate to ='/' />} />
             </Routes>
         )
@@ -20,9 +20,10 @@ export const useRoutes = isAuth => {
 
     return(
         <Routes>
+            <Route path='/' element={<Feed/>} exact />
             <Route path='/auth/login' element={<LoginPage/>} exact/>
             <Route path='/auth/register' element={<RegisterPage/>} exact/>
-            <Route path='/' element={<Feed/>} exact />
+            <Route path='/post/:id' element={<SinglePost/>} />
             <Route path='*' element={<Navigate to='/' />} />
         </Routes>
     )

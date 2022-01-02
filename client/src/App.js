@@ -27,7 +27,7 @@ function App() {
     }}>
       <BrowserRouter>
         <div className="App">
-          <Layout isAuthenticated={isAuthenticated}>
+          <Layout>
             {routes}
           </Layout>
         </div>

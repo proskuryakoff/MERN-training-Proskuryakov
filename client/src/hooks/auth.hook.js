@@ -40,5 +40,5 @@ export const useAuth = () => {
         }
     }, [login])
 
-    return {login, logout, setAutoLogout,token, userId}
+    return {login, logout, setAutoLogout, token, userId}
 }

@@ -9,7 +9,7 @@ export const SinglePost = () => {
     const postId = useParams().id;
     const fetchPost = useCallback(async () => {
         try {
-          const fetchedPost = await request('http://localhost:4000/' + postId, 'GET', null, {})
+          const fetchedPost = await request('http://localhost:4000/post/' + postId, 'GET', null, {})
           setPost(fetchedPost)
         } catch (err) {
           console.log(err);

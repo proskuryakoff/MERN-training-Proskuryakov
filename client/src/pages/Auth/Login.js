@@ -20,7 +20,7 @@ export const LoginPage = () => {
 
     const loginHandler = async() => {
         try{
-            const data = await request('/auth/login', 'POST', {...form});
+            const data = await request('http://localhost:4000/auth/login', 'POST', {...form});
             auth.login(data.token, data.userId);
         }
         catch(err){

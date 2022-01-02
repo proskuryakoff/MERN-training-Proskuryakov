@@ -22,7 +22,7 @@ export const RegisterPage = () => {
 
     const registerHandler = async() => {
         try{
-            const data = await request('/auth/register', 'POST', {...form})
+            const data = await request('http://localhost:4000/auth/register', 'POST', {...form})
             console.log(data)
             navigate('/', {replace: true})
         }

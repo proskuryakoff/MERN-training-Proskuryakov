@@ -4,7 +4,7 @@ import './Layout.css'
 
 const layout = (props) => (
     <Aux>
-        <Navbar isAuthenticated = {props.isAuthenticated} />
+        <Navbar/>
         <main className="Content">
             {props.children}
         </main>
