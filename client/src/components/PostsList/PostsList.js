@@ -11,6 +11,7 @@ export const PostsList = ({ posts }) => {
         { posts.map((post) => {
             return (
                 <Card 
+                key={post._id}
                 id={post._id}
                 title={post.title} 
                 content={post.content}/>

@@ -1,31 +1,30 @@
-import React from 'react';
-import {Routes, Route, Navigate} from 'react-router-dom';
-import {RegisterPage} from './pages/Auth/Register';
-import {LoginPage} from './pages/Auth/Login';
-import {CreatePage} from './pages/CreatePage/CreatePage';
-import {SinglePost} from './pages/SinglePost/SinglePost';
-import {Feed} from './pages/Feed/Feed';
+import {FEED_ROUTE, LOGIN_ROUTE, REGISTER_ROUTE, CONTENT_ROUTE, CREATE_PAGE_ROUTE} from './utils/Consts'
+import AuthPage from './pages/AuthPage/Auth';
+import FeedPage from './pages/FeedPage/Feed';
+import CreatePage from './pages/CreatePage/CreatePage';
 
-export const useRoutes = isAuth => {
-    if (isAuth){
-        return(
-            <Routes>
-                <Route path='/' element={<Feed/>} exact />
-                <Route path='/post/:id' element={<SinglePost/>} />
-                <Route path='/create' element={<CreatePage/>} exact />
-                <Route path='*' element={<Navigate to ='/' />} />
-            </Routes>
-        )
+export const authRoutes = [
+    {
+        path: CREATE_PAGE_ROUTE,
+        Element: <CreatePage />
     }
+]
 
-    return(
-        <Routes>
-            <Route path='/' element={<Feed/>} exact />
-            <Route path='/auth/login' element={<LoginPage/>} exact/>
-            <Route path='/auth/register' element={<RegisterPage/>} exact/>
-            <Route path='/post/:id' element={<SinglePost/>} />
-            <Route path='*' element={<Navigate to='/' />} />
-        </Routes>
-    )
-}
-
+export const publicRoutes = [
+    {
+        path: FEED_ROUTE,
+        Element: <FeedPage />
+    },
+    {
+        path: LOGIN_ROUTE,
+        Element: <AuthPage />
+    }, 
+    {
+        path: REGISTER_ROUTE,
+        Element: <AuthPage />
+    }, 
+    // {
+    //     path: CONTENT_ROUTE + '/:id',
+    //     Component: ContentPage
+    // }, 
+]

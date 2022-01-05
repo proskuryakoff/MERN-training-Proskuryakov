@@ -1,38 +1,19 @@
-import React, {useEffect} from 'react';
-import {BrowserRouter} from 'react-router-dom';
-import Layout from "./components/Layout/Layout";
-import { useRoutes } from './Routes'
-import { useAuth } from './hooks/auth.hook';
-import { AuthContext } from './context/AuthContext';
+import React, { useEffect } from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import { AppRouter } from './components/AppRouter/AppRouter';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPosts } from './actions/posts'
 
-function App() {
-  const {token, login, logout, setAutoLogout, userId} = useAuth();
-  const isAuthenticated = !!token;
-  const routes = useRoutes(isAuthenticated);
+const App = () => {
+  const dispatch = useDispatch()
+  const auth = useSelector((state) => state.auth);
   useEffect(() => {
-    const expiryDate = localStorage.getItem('expiryDate');
-    if (!expiryDate) {
-      return;
-    }
-    if (new Date(expiryDate) <= new Date()) {
-      logout();
-      return;
-    }
-    const remainingMilliseconds = new Date(expiryDate).getTime() - new Date().getTime();
-    setAutoLogout(remainingMilliseconds);
-  }, [])
+    dispatch(getPosts())
+  }, [dispatch])
   return (
-    <AuthContext.Provider value={{
-      token, login, logout, userId, isAuthenticated
-    }}>
-      <BrowserRouter>
-        <div className="App">
-          <Layout>
-            {routes}
-          </Layout>
-        </div>
-      </BrowserRouter>
-    </AuthContext.Provider>
+    <BrowserRouter>
+      <AppRouter />
+    </BrowserRouter>
   );
 }
 

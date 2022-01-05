@@ -1,14 +1,13 @@
-import Aux from "../../hoc/Auxil";
 import Navbar from "../Navigation/Navbar";
 import './Layout.css'
 
 const layout = (props) => (
-    <Aux>
+    <div className="layout">
         <Navbar/>
         <main className="Content">
             {props.children}
         </main>
-    </Aux>
+    </div>
 )
  
 export default layout;
