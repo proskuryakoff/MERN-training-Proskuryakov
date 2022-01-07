@@ -1,50 +1,48 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useLocation, useNavigate, NavLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Button from '../../components/Button/Button'
 import Input from '../../components/Input/Input'
 import Form from '../../components/Form/Form';
-import { login, register } from '../../actions/auth';
-import { LOGIN_ROUTE } from '../../utils/Consts';
+import Loader from '../../components/Loader/Loader';
+import * as actions from '../../actions/auth';
+import { updateObject } from '../../utils/utility'
 import './AuthPage.css';
 
 const AuthPage = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const isLogin = location.pathname === LOGIN_ROUTE;
-  console.log(location)
+  const authState = useSelector((state) => state.auth);
   const [form,setForm] = useState({
     email: '',
     password: '',
     username: ''
 });
+const [isSignup, setIsSignup] = useState(true);
 const dispatch = useDispatch();
 
 const changeHandler = event => {
-  setForm({...form, [event.target.name]: event.target.value})
+  const updatedForm = updateObject(form, {[event.target.name]: event.target.value})
+  setForm(updatedForm)
 }
 
-const registerHandler = async (event) => {
-  try{
-    dispatch(register(form, navigate));
-  } catch (err){
-    console.log(err);
-    throw err;
-  }
-}
+const submitHandler = event => {
+  event.preventDefault();
+  dispatch(actions.auth({...form}, isSignup))
+  // navigate('/');
+};
 
-const loginHandler = async (event) => {
-  try{
-    dispatch(login(form, navigate));
-  } catch (err){
-    console.log(err);
-    throw err;
-  }
-}
+const switchAuthModeHandler = () => {
+  setIsSignup(!isSignup);
+};
 
+if (authState.loading) {
+  return (
+    <Loader />
+  )
+}
 
   return (
-    <Form title={!isLogin ? 'Register an Account' : 'Log In'}>
+    <Form title={isSignup ? 'Register an Account' : 'Log In'}>
             <div className='form-field'>
                 <div className='input-field'>
                     <label htmlFor='email'>Email</label>
@@ -66,7 +64,7 @@ const loginHandler = async (event) => {
                         onChange={changeHandler}
                     />
                 </div>
-                {!isLogin 
+                {isSignup 
                 ? <div className='input-field'>
                     <label htmlFor='username'>Username</label>
                     <Input placeholder='Your username' 
@@ -81,13 +79,13 @@ const loginHandler = async (event) => {
                 }
             </div>
             <div className='card-action'>
-                {!isLogin 
-                ? <Button onClick= {registerHandler} className='Button'>Registration</Button> 
-                : <Button onClick= {loginHandler} className='Button'>Log In</Button>}
+                {isSignup 
+                ? <Button onClick= {submitHandler} className='Button'>Registration</Button> 
+                : <Button onClick= {submitHandler} className='Button'>Log In</Button>}
             </div>
-            {!isLogin 
-            ? <div>Have an account already? <NavLink to='/auth/login'>Sign In</NavLink></div>
-            : <div>Don't have an account? <NavLink to='/auth/register'>Register</NavLink></div>
+            {isSignup
+            ? <div>Have an account already? <NavLink onClick={switchAuthModeHandler} to='/auth/login'>Sign In</NavLink></div>
+            : <div>Don't have an account? <NavLink onClick={switchAuthModeHandler} to='/auth/register'>Register</NavLink></div>
             }
         </Form>
   );

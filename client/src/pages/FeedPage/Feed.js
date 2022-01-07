@@ -1,13 +1,25 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getPosts } from '../../actions/posts'
 import { PostsList } from '../../components/PostsList/PostsList';
+import Loader from '../../components/Loader/Loader';
  
 const FeedPage = () => {
-  const posts = useSelector((state) => state.posts);
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getPosts())
+  }, [dispatch])
+  const postsState = useSelector((state) => state.posts);
+
+  if (postsState.loading) {
+    return (
+      <Loader />
+    )
+  }
 
   return (
     <>
-      <PostsList posts={posts} />
+      <PostsList posts={postsState.posts} />
     </>
   );
 }
