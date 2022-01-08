@@ -29,6 +29,8 @@ export const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("expirationDate");
     localStorage.removeItem("userId");
+    localStorage.removeItem("roles");
+    localStorage.removeItem("username");
     return {
         type: actionTypes.AUTH_LOGOUT
     };
@@ -56,6 +58,8 @@ export const auth = (form, isSignup) => {
                 localStorage.setItem("token", response.data.token);
                 localStorage.setItem("expirationDate", expirationDate);
                 localStorage.setItem("userId", response.data.userId);
+                localStorage.setItem("roles", response.data.roles);
+                localStorage.setItem("username", response.data.username);
                 dispatch(authSuccess(response.data.token, response.data.userId, response.data.roles, response.data.username));
                 dispatch(checkAuthTimeout(response.data.expiresIn));
             })
@@ -77,7 +81,9 @@ export const authCheckState = () => {
                 dispatch(logout());
             } else {
                 const userId = localStorage.getItem('userId');
-                dispatch(authSuccess(token, userId));
+                const roles = localStorage.getItem('roles');
+                const username = localStorage.getItem('username');
+                dispatch(authSuccess(token, userId, roles, username));
                 dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000 ));
             }   
         }

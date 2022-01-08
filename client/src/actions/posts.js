@@ -44,3 +44,13 @@ export const createPost = (post, navigate) => async (dispatch) => {
     }
 }
 
+export const getContent = (url) => async (dispatch) => {
+    try{
+        dispatch(fetchStart())
+        const { data } = await api.fetchContent(url);
+        dispatch(fetchSuccess(data))
+    } catch (err) {
+        console.log(err.message)
+        dispatch(fetchFail(err))
+    }
+}

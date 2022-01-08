@@ -22,7 +22,10 @@ const Navbar = (props) => {
     return(
         <header className='Navbar'>
             <NavLink to="/" className='nav-link'>Home</NavLink>
-            <NavLink to="/create" className='nav-link'>Create Post</NavLink>
+            {isAuthenticated && authState.roles.includes("ADMIN")
+            ? <NavLink to="/create" className='nav-link'>Create Post</NavLink>
+            : <></>
+            }
             <Search />
             
 
