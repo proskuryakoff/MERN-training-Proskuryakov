@@ -8,11 +8,26 @@
     outline: none;
 }
 
-.default-input:focus{
+.selector {
+    height: 30px;
+    background: none;
+    border: none;
+    border-bottom: 1px solid rgb(108, 9, 236);
+    padding: 5px;
+    margin-bottom: 10px;
+    outline: none;
+}
+
+.selector:focus {
+    background-color: rgb(226, 226, 226);
+}
+
+.default-input:focus {
     background-color: rgb(226, 226, 226);
 }
 
 .search-input {
+    padding-left: 10px;
     width: 100%;
     border: none;
     height: 30px;

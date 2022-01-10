@@ -10,8 +10,10 @@ import '../AuthPage/AuthPage.css';
 const CreatePage = () => {
   const navigate = useNavigate();
   const [form,setForm] = useState({
+    category: '',
     title: '',
-    Content: ''
+    contentLink: '',
+    description: ''
   });
   const dispatch = useDispatch();
 
@@ -33,6 +35,16 @@ const CreatePage = () => {
     <Form title='Create a Post'>
             <div className='form-field'>
                 <div className='input-field'>
+                    <label htmlFor='category'>Category</label>
+                    <Input placeholder='Category' 
+                        className='selector'
+                        id='category'
+                        name='category'
+                        type='select'
+                        onChange={changeHandler}
+                    />
+                </div>
+                <div className='input-field'>
                     <label htmlFor='title'>Title</label>
                     <Input placeholder='Title' 
                         className='default-input'
@@ -43,11 +55,21 @@ const CreatePage = () => {
                     />
                 </div>
                 <div className='input-field'>
-                    <label htmlFor='content'>Content</label>
-                    <Input placeholder='Content' 
+                    <label htmlFor='contentLink'>Content</label>
+                    <Input placeholder='Content Link' 
                         className='default-input'
-                        id='content'
-                        name='content'
+                        id='contentLink'
+                        name='contentLink'
+                        type='file'
+                        onChange={changeHandler}
+                    />
+                </div>
+                <div className='input-field'>
+                    <label htmlFor='description'>Content</label>
+                    <Input placeholder='Description' 
+                        className='default-input'
+                        id='description'
+                        name='description'
                         type='text'
                         onChange={changeHandler}
                     />
