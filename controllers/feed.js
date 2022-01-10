@@ -31,8 +31,8 @@ exports.createPost = async (req, res) => {
         if (!validationErrors.isEmpty()){
             return res.status(400).json({message: "Post creation error", errors: validationErrors.array()})
         }
-        const {title, content} = req.body;
-        const newPost = new Post({title, content});
+        const {category, title, contentLink, description} = req.body;
+        const newPost = new Post({category, title, contentLink, description});
         await newPost.save()
         return res.json({message: "A new post was created successfully"})
     } catch (err) {

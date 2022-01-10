@@ -1,4 +1,7 @@
 .card{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: 300px;
     margin: 20px 40%;
     padding: 20px;
@@ -9,4 +12,10 @@
 h1{
     text-align: center;
     margin-top: 0; 
+}
+
+.title {
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2em;
 }

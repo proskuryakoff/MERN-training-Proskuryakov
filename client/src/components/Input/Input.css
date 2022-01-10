@@ -8,6 +8,10 @@
     outline: none;
 }
 
+.default-input:focus {
+    background-color: rgb(226, 226, 226);
+}
+
 .selector {
     height: 30px;
     background: none;
@@ -16,13 +20,10 @@
     padding: 5px;
     margin-bottom: 10px;
     outline: none;
+    cursor: pointer;
 }
 
-.selector:focus {
-    background-color: rgb(226, 226, 226);
-}
-
-.default-input:focus {
+.selector:hover {
     background-color: rgb(226, 226, 226);
 }
 

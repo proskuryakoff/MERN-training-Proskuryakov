@@ -4,8 +4,9 @@ import './Card.css'
 
 const Card = (props) => (
     <div className="card">
-        <Link to={'/content/'+ props.id}>{props.title}</Link>
-        <div>{props.content}</div>
+        <Link to={'/content/'+ props.id} className="title">{props.title}</Link>
+        <div>{props.description}</div>
+        <div>{props.created}</div>
     </div>
 )
 

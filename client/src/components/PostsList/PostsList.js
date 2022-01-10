@@ -14,7 +14,9 @@ export const PostsList = ({ posts }) => {
                 key={post._id}
                 id={post._id}
                 title={post.title} 
-                content={post.content}/>
+                description={post.description}
+                created={post.created}
+                />
             )
             }) }
     </div>

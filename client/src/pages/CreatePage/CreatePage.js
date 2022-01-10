@@ -65,7 +65,7 @@ const CreatePage = () => {
                     />
                 </div>
                 <div className='input-field'>
-                    <label htmlFor='description'>Content</label>
+                    <label htmlFor='description'>Description</label>
                     <Input placeholder='Description' 
                         className='default-input'
                         id='description'

@@ -10,8 +10,8 @@ router.get('/content/:id', controller.getPost);
 router.get('/', controller.getPosts);
 
 router.post('/', [
-    check('title', 'Email should not empty').notEmpty(),
-    check('content', 'Email is incorrect').notEmpty()
+    check('title', 'Title should not be empty').notEmpty(),
+    check('description', 'Description should not be empty').notEmpty(),
 ], 
 controller.createPost);
 

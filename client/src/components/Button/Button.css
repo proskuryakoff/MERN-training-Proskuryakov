@@ -40,6 +40,7 @@
   background-color: rgb(197, 166, 255);
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
+  cursor: pointer;
 }
 
 .search-button:hover{

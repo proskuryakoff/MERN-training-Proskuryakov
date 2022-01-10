@@ -7,7 +7,7 @@ const authMiddleware = require('../middleware/authMiddleware')
 const roleMiddleware = require('../middleware/roleMiddleware')
 
 router.post('/register', [
-    check('email', 'Email should not empty').notEmpty(),
+    check('email', 'Email should not be empty').notEmpty(),
     check('email', 'Email is incorrect').isEmail(),
     check('password', 'Minimum length of password is 5 symbols').isLength({min: 5})
 ], controller.register)

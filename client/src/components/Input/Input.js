@@ -14,7 +14,7 @@ const input = props => {
                 onChange={props.onChange}
                 onBlur={props.onBlur}
             >
-                {categoryList.map((option) => {
+                {categoryList.sort().map((option) => {
                     return(
                         <option key={option}>{option}</option>
                     )
