@@ -18,6 +18,8 @@
     height: 30px;
     background: white;
     outline: none;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 .search-input:focus{
     background-color: rgb(226, 226, 226);

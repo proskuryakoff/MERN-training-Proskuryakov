@@ -3,11 +3,8 @@ const {Schema, model, Types} = require('mongoose');
 const commentSchema = new Schema({
     text: String,
     author: {
-        id: {
-            type: Types.ObjectId,
-            ref: 'User'
-        },
-        name: String
+        type: Types.ObjectId,
+        ref: 'User'
     },
     created: {
         type: Date,
@@ -16,5 +13,3 @@ const commentSchema = new Schema({
 })
 
 module.exports = model('Comment', commentSchema)
-
-//fix

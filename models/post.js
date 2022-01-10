@@ -1,19 +1,25 @@
 const {Schema, model, Types} = require('mongoose');
 
 const postSchema = new Schema({
-    title: String,
-    content: String,                    // fix
-    description: String,
+    type: String,
     category: String,
+    title: String,
+    contentLink: String,               
+    description: String,
     viewed: Number,
-    liked: [{type: Types.ObjectId}],     // fix
+    liked: [
+        {
+            type: Types.ObjectId, 
+            ref: "User"
+        }
+    ],     
     comments: [
         {
             type: Types.ObjectId,
             ref: "comments"
         }
     ],
-    created: {                           // fix
+    created: {
         type: Date,
         default: Date.now
     }

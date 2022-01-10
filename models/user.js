@@ -11,12 +11,24 @@ const userSchema = new Schema({
         required: true
     }, 
     username: String,
-    roles: [{
-        type: String, 
-        ref: 'Role'
-    }],
-    playlists: [{type: Types.ObjectId, ref: 'Playlist'}],       //fix
-    liked: [{type: Types.ObjectId}]     //fix
+    roles: [
+        {
+            type: String, 
+            ref: 'Role'
+        }
+    ],
+    playlists: [
+        {
+            type: Types.ObjectId, 
+            ref: 'Playlist'
+        }
+    ],
+    liked: [
+        {
+            type: Types.ObjectId, 
+            ref: 'Post'
+        }
+    ] 
 })
 
 module.exports = model('User', userSchema)
