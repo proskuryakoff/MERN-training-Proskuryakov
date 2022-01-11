@@ -14,7 +14,6 @@ const ContentPage = () => {
   const postState = useSelector((state) => state.posts);
   const authState = useSelector((state) => state.auth);
   const isAuthenticated = !!authState.token;
-  console.log(isAuthenticated)
   const contentPath = process.env.PUBLIC_URL + postState.posts.contentLink
 
   let unauthorizedViews = [];
