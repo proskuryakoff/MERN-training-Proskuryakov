@@ -3,13 +3,3 @@
     width: 70%;
     justify-content: space-between;
 }
-
-.input-field{
-    display: flex;
-    flex-direction: column;
-}
-
-.input-field label{
-    font-size: 0.8rem;
-}
-

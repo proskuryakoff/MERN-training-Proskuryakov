@@ -23,7 +23,7 @@
     cursor: pointer;
 }
 
-.selector:hover {
+.selector:focus {
     background-color: rgb(226, 226, 226);
 }
 
@@ -40,3 +40,13 @@
 .search-input:focus{
     background-color: rgb(226, 226, 226);
 }
+
+.input-field{
+    display: flex;
+    flex-direction: column;
+}
+
+.input-field label{
+    font-size: 0.8rem;
+}
+
