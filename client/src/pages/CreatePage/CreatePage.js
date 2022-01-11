@@ -10,6 +10,7 @@ import '../AuthPage/AuthPage.css';
 const CreatePage = () => {
   const navigate = useNavigate();
   const authState = useSelector((state) => state.auth)
+  // const [file,setFile] = useState(null)
   const [form,setForm] = useState({
     category: '',
     title: '',
@@ -26,6 +27,7 @@ const CreatePage = () => {
 
   const fileChangeHandler = event => {
     setForm({...form, [event.target.name]: event.target.files[0]})
+    // setFile(event.target.files[0])
   }
 
   const createPostHandler = async(event) => {

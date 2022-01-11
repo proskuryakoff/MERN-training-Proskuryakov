@@ -40,7 +40,7 @@ class authController {
             return res.json({message: "User was created successfully", token, userId, roles, username, expiresIn})
         } catch (err) {
             console.log(err);
-            res.status(400).json({message: "Registration error"})
+            res.status(400).json({message: "Registration error", error: err})
         }
     }
 
@@ -63,7 +63,7 @@ class authController {
             return res.json({message: "Logged in successfully", token, userId, roles, username, expiresIn})
         } catch (err) {
             console.log(err);
-            res.status(400).json({message: "Login error"})
+            res.status(400).json({message: "Login error", error: err})
         }
     }
 

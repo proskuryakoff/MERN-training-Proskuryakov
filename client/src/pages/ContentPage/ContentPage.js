@@ -42,7 +42,6 @@ const ContentPage = () => {
        ? <ReactPlayer 
           url={contentPath}
           width='50%'
-          height='50%'
           controls = {true}
           onStart = {startHandler}
        />

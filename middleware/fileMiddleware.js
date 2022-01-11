@@ -9,7 +9,7 @@ const storage = multer.diskStorage({
     }
 })
 
-const fileTypes = ['video/mp4', 'audio/mp3']
+const fileTypes = ['video/mp4', 'audio/mpeg']
 
 const fileFilter = (req, file, cb) => {
     if(fileTypes.includes(file.mimetype)) {
