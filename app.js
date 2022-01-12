@@ -15,7 +15,7 @@ const MONGO_URI = config.get('mongoUri');
 //Middleware
 app.use(cors());
 app.use(express.json({extended: true}));
-app.use('/client/public/storage', express.static(path.join(__dirname, 'storage')))
+app.use('/storage', express.static(path.join(__dirname, 'storage')))
 
 //Routers
 app.use('/auth', authRouter);

@@ -54,3 +54,12 @@ export const getContent = (url) => async (dispatch) => {
         dispatch(fetchFail(err))
     }
 }
+export const loadVideo = (url) => async (dispatch) => {
+    try{
+       await api.fetchContent(url);
+    } catch (err) {
+        console.log(err.message)
+        dispatch(fetchFail(err))
+    }
+}
+ 

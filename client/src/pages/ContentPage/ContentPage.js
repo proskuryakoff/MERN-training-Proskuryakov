@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from "react-router-dom";
-import { getContent } from '../../actions/posts'
+import { getContent, loadVideo } from '../../actions/posts'
 import ReactPlayer from 'react-player'
 import Loader from '../../components/Loader/Loader';
  
@@ -9,12 +9,13 @@ const ContentPage = () => {
   const dispatch = useDispatch()
   const postId = useParams().id;
   useEffect(() => {
-    dispatch(getContent('/content/' + postId))
+    dispatch(getContent('/content/' + postId + '/get'))
+    dispatch(loadVideo('/content/' + postId))
   }, [dispatch, postId])
   const postState = useSelector((state) => state.posts);
   const authState = useSelector((state) => state.auth);
   const isAuthenticated = !!authState.token;
-  const contentPath = process.env.PUBLIC_URL + postState.posts.contentLink
+  const contentPath = 'http://localhost:4000/content/' + postId
 
   let unauthorizedViews = [];
 
