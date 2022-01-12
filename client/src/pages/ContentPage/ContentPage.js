@@ -17,15 +17,15 @@ const ContentPage = () => {
   const isAuthenticated = !!authState.token;
   const contentPath = 'http://localhost:4000/content/' + postId
 
-  let unauthorizedViews = [];
+  let views = [];
 
-  if (localStorage.getItem('unauthorizedViews') !== null) {
-    unauthorizedViews = JSON.parse(localStorage.getItem('unauthorizedViews'))
+  if (localStorage.getItem('views') !== null) {
+    views = JSON.parse(localStorage.getItem('views'))
   }
   const startHandler = () => {
-    if(!unauthorizedViews.includes(postState.posts._id)){
-      unauthorizedViews.push(postState.posts._id)
-      localStorage.setItem('unauthorizedViews', JSON.stringify(unauthorizedViews))
+    if(!views.includes(postState.posts._id)){
+      views.push(postState.posts._id)
+      localStorage.setItem('views', JSON.stringify(views))
     }
   }
 
@@ -39,7 +39,7 @@ const ContentPage = () => {
     <div>
         <h1>{postState.posts.title}</h1>
         <div>{postState.posts.description}</div>
-       {isAuthenticated || unauthorizedViews.length < 10
+       {isAuthenticated || views.length < 10
        ? <ReactPlayer 
           url={contentPath}
           width='50%'

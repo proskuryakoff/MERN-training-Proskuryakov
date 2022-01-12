@@ -13,6 +13,7 @@ export const PostsList = ({ posts }) => {
                 <Card 
                 key={post._id}
                 id={post._id}
+                type={post.type} 
                 title={post.title} 
                 description={post.description}
                 created={post.created}

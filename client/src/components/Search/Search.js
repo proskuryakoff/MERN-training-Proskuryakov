@@ -35,7 +35,7 @@ const Search = props => {
                 className='search-button'
                 onClick={searchHandler}
             >
-                <img src={searchIcon}/>
+                <img src={searchIcon} className='search-icon'/>
             </Button>
         </div>
     )
