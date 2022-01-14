@@ -7,5 +7,11 @@ export const fetchContent = (url) => API.get(url);
 export const createPost = (newPost, headers) => API.post('/', newPost, {
     headers: headers
 });
+export const updatePost = (url, updatedPost, headers) => API.put(url, updatedPost, {
+    headers: headers
+});
+export const deletePost = (url, headers) => API.delete(url, {
+    headers: headers
+});
 
 export const authApi = (url, formData) => API.post(url, formData)

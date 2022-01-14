@@ -7,6 +7,12 @@ const postSchema = new Schema({
     contentLink: String,               
     description: String,
     viewed: Number,
+    creator: [
+        {
+            type: Types.ObjectId, 
+            ref: "User"
+        }
+    ],     
     liked: [
         {
             type: Types.ObjectId, 

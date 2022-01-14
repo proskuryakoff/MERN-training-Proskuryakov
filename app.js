@@ -7,6 +7,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const authRouter = require('./routes/auth');
 const feedRouter = require('./routes/feed');
+const contentRouter = require('./routes/content')
 
 
 const PORT = config.get('port');
@@ -18,6 +19,7 @@ app.use(express.json({extended: true}));
 app.use('/storage', express.static(path.join(__dirname, 'storage')))
 
 //Routers
+app.use('/content', contentRouter)
 app.use('/auth', authRouter);
 app.use('/', feedRouter);
 

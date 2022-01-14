@@ -1,14 +1,43 @@
 import React from 'react';
+import like from '../../assets/like.png'
+import likeActive from '../../assets/like_active.png'
 import './Button.css'
 
-const button = props => (
-    <button className={props.className}
-    onClick={props.onClick} 
-    disabled={props.disabled}
-    type={props.type}
-    >
-        {props.loading ? 'Loading...' : props.children}
-    </button>
-)
+const button = (props) => {
+    if (props.className === 'like-button') {
+        if (props.liked) {
+            return (
+                <button
+                className='like-button-active'
+                onClick={props.onClick} 
+                disabled={props.disabled}
+                >
+                    <img src={likeActive} className='like-icon'/>
+                    Like
+                </button>
+            )
+        }
+        return (
+            <button
+            className={props.className}
+            onClick={props.onClick} 
+            disabled={props.disabled}
+            >
+                <img src={like} className='like-icon'/>
+                Like
+            </button>
+        )
+    }
+    return (
+        <button className={props.className}
+        onClick={props.onClick} 
+        disabled={props.disabled}
+        type={props.type}
+        >
+            {props.loading ? 'Loading...' : props.children}
+        </button>
+    )
+}
+    
 
 export default button;

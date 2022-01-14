@@ -1,6 +1,7 @@
 import React from "react";
 import {Link} from 'react-router-dom'
 import VideoThumbnail from 'react-video-thumbnail';
+import { FormatDate } from "../../utils/FormatDate";
 import './Card.css'
 
 const Card = (props) => {
@@ -15,7 +16,7 @@ const Card = (props) => {
                 :
                 <></>
             }
-        <div>{props.created}</div>
+        <div>Published: {FormatDate(props.created)}</div>
     </div>
     )
 }

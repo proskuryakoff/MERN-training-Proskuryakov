@@ -1,0 +1,16 @@
+.textarea-default {
+    width: 75%;
+    padding: 10px;
+    outline: none;
+	-moz-appearance: none;
+    border: none;
+    border: none;
+    border-bottom: 1px solid rgb(202, 202, 202);
+    resize: none;
+    overflow: auto;
+    font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+.textarea-default:focus {
+    border-bottom: 2px solid rgb(108, 9, 236);
+    background-color: rgb(236, 233, 233);
+}

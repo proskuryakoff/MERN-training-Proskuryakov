@@ -46,3 +46,40 @@
 .search-button:hover{
   background-color: rgb(162, 136, 209);
 }
+
+.like-button {
+  width: 85px;
+  font-size: 1.1em;
+  border: none;
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  text-align: center;
+}
+.like-button:hover {
+  background-color: rgb(236, 233, 233);
+}
+
+.like-button-active {
+  width: 85px;
+  font-size: 1.1em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: none;
+  border-bottom: 2px solid blueviolet;
+  background: none;
+  font-weight: bold;
+  color: blueviolet;
+  cursor: pointer;
+}
+.like-button-active:hover {
+  background-color: rgb(236, 233, 233);
+}
+
+.like-icon {
+  width: 32px;
+  height: 32px;
+}
