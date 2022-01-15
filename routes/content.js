@@ -11,13 +11,14 @@ router.get('/:id', controller.loadVideo);
 
 // router.post('/:id/:action', authMiddleware, controller.userPostUpdate)
 
-// router.put('/:id/', [
-//     roleMiddleware(['ADMIN']),
-//     fileMiddleware.single('content'),
-//     check('title', 'Title should not be empty').notEmpty(),
-//     check('description', 'Description should not be empty').notEmpty(),
-// ], controller.adminPostUpdate)
+router.put('/:id/', [
+    authMiddleware,
+    roleMiddleware(['ADMIN']),
+    fileMiddleware.single('content'),
+    check('title', 'Title should not be empty').notEmpty(),
+    check('description', 'Description should not be empty').notEmpty(),
+], controller.adminPostUpdate)
 
-// router.delete('/:id/', roleMiddleware(['ADMIN']), controller.deletePost)
+router.delete('/:id/', [authMiddleware, roleMiddleware(['ADMIN'])], controller.deletePost)
 
 module.exports = router;

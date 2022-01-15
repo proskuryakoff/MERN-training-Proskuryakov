@@ -9,6 +9,7 @@ const roleMiddleware = require('../middleware/roleMiddleware');
 router.get('/', controller.getPosts);
 
 router.post('/', [
+    authMiddleware,
     roleMiddleware(['ADMIN']),
     fileMiddleware.single('content'),
     check('title', 'Title should not be empty').notEmpty(),

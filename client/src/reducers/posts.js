@@ -36,6 +36,8 @@ export default (state = initialState, action) => {
             return fetchFail(state, action);
         case actionTypes.CREATE: 
             return [...state, action.payload.post];
+        case actionTypes.DELETE: 
+            return [...state, action.payload];
         default: 
             return state;
     }

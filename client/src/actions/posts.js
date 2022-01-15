@@ -34,13 +34,34 @@ export const getPosts = () => async (dispatch) => {
     }
 }
 
-export const createPost = (post, headers) => async (dispatch) => {
+export const createPost = (post, headers, navigate) => async (dispatch) => {
     try{
         const { data } = await api.createPost(post, headers);
         dispatch({type: actionTypes.CREATE, payload: {data, post}})
+        
     } catch (err) {
         console.log(err.message)
     }
+    navigate("/", { replace: true })
+}
+export const editPost = (url, post, headers, navigate) => async (dispatch) => {
+    try{
+        const { data } = await api.updatePost(url, post, headers);
+        dispatch({type: actionTypes.CREATE, payload: {data, post}})
+        
+    } catch (err) {
+        console.log(err.message)
+    }
+    navigate("/", { replace: true })
+}
+export const deletePost = (url, headers, navigate) => async (dispatch) => {
+    try{
+        const { data } = await api.deletePost(url, headers);
+        dispatch({type: actionTypes.DELETE, payload: {data}})
+    } catch (err) {
+        console.log(err.message)
+    }
+    navigate("/", { replace: true })
 }
 
 export const getContent = (url) => async (dispatch) => {

@@ -20,10 +20,11 @@ exports.createPost = async (req, res) => {
         if (!validationErrors.isEmpty()){
             return res.status(400).json({message: "Post creation error", errors: validationErrors.array()})
         }
-        const {category, title, description, creator} = req.body;
+        const {category, title, description} = req.body;
         const file = req.file;
         const contentLink = file.path;
         const type = file.mimetype;
+        const creator = req.user.id;
         const viewed = 0;
         const newPost = new Post({type, category, title, contentLink, description, viewed, creator});
         await newPost.save()

@@ -5,7 +5,7 @@ const initialState = {
     token: null,
     userId: null,
     username: null,
-    roles: null,
+    roles: [],
     error: null,
     loading: false,
 };
@@ -37,7 +37,7 @@ const authLogout = (state, action) => {
         token: null, 
         userId: null, 
         username: null, 
-        roles: null 
+        roles: [] 
     });
 };
 

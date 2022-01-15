@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import Form from '../../components/Form/Form';
 import Input from '../../components/Input/Input';
@@ -7,11 +8,11 @@ import { createPost } from '../../actions/posts';
 import '../AuthPage/AuthPage.css';
 
 const CreatePage = () => {
+  const navigate = useNavigate();
   const authState = useSelector((state) => state.auth)
   const [form,setForm] = useState({
     category: '',
     title: '',
-    contentLink: '',
     description: '', 
     content: null
   });
@@ -37,8 +38,7 @@ const CreatePage = () => {
       formData.append('title', form.title)
       formData.append('description', form.description)
       formData.append('content', form.content)
-      formData.append('creator', authState.userId)
-      dispatch(createPost(formData, headers));
+      dispatch(createPost(formData, headers, navigate));
     }
     catch(err){
         console.log(err);

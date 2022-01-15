@@ -1,17 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from "react-router-dom";
-import { getContent, loadVideo } from '../../actions/posts'
+import { useParams, useNavigate } from "react-router-dom";
+import { getContent, loadVideo, editPost, deletePost } from '../../actions/posts'
 import ReactPlayer from 'react-player'
 import Loader from '../../components/Loader/Loader';
 import Button from '../../components/Button/Button';
+import Input from '../../components/Input/Input'
 import TextArea from '../../components/TextArea/TextArea';
+import Form from '../../components/Form/Form';
 import { FormatDate } from '../../utils/FormatDate';
 import './ContentPage.css'
  
 const ContentPage = () => {
   const dispatch = useDispatch()
-  const [form,setForm] = useState(null);
+  const navigate = useNavigate();
+  const [commentForm,setCommentForm] = useState({
+    comments: ''
+  });
+  const [form,setForm] = useState({
+    category: '',
+    title: '',
+    description: '', 
+    content: null
+  });
+  const [isEditing, setEdit] = useState(false)
   const postId = useParams().id;
   useEffect(() => {
     dispatch(getContent('/content/' + postId + '/get'))
@@ -28,15 +40,68 @@ const ContentPage = () => {
     views = JSON.parse(localStorage.getItem('views'))
   }
 
+  const commentChangeHandler = event => {
+    setCommentForm({...commentForm, [event.target.name]: event.target.value})
+  }
   const changeHandler = event => {
     setForm({...form, [event.target.name]: event.target.value})
   }
+  const fileChangeHandler = event => {
+    setForm({...form, [event.target.name]: event.target.files[0]})
+  }
+
 
   const startHandler = () => {
     if(!views.includes(postState.posts._id)){
       views.push(postState.posts._id)
       localStorage.setItem('views', JSON.stringify(views))
     }
+  }
+
+  const startEditHandler = () => {
+    setEdit(true)
+    setForm({
+      category: postState.posts.category,
+      title: postState.posts.title,
+      description: postState.posts.description, 
+      content: null
+    })
+  }
+  const closeEditWindow = () => {
+    setEdit(false)
+  }
+  const editHandler = (event) => {
+    event.preventDefault()
+    try{
+      const headers = {
+        'Authorization': 'Bearer ' + authState.token
+      }
+      const url = '/content/' + postId
+      const formData = new FormData();
+      formData.append('category', form.category)
+      formData.append('title', form.title)
+      formData.append('description', form.description)
+      if (form.content === null) {
+        formData.append('contentLink', postState.posts.contentLink)
+        formData.append('type', postState.posts.type)
+      } else {
+        formData.append('content', form.content)
+      }
+      dispatch(editPost(url, formData, headers, navigate));
+    }
+    catch(err){
+        console.log(err);
+        throw err;
+    }
+  }
+
+  const deleteHandler = (event) => {
+    event.preventDefault()
+    const headers = {
+      'Authorization': 'Bearer ' + authState.token
+    }
+    const url = '/content/' + postId
+    dispatch(deletePost(url, headers, navigate));
   }
 
   const likeHandler = () => {
@@ -48,9 +113,69 @@ const ContentPage = () => {
       <Loader />
     )
   }
+  if (isEditing) {
+    return (
+    <Form title='Update the Post' onSubmit={editHandler} encType='multipart/form-data'>
+        <Input placeholder='Category' 
+            className='selector'
+            id='category'
+            name='category'
+            type='select'
+            htmlFor='category'
+            value={form.category}
+            onChange={changeHandler}
+        />
+        <Input placeholder='Title' 
+            className='default-input'
+            id='title'
+            name='title'
+            type='text'
+            htmlFor='title'
+            value={form.title}
+            onChange={changeHandler}
+        />
+        <Input placeholder='Content' 
+            className='default-input'
+            id='content'
+            name='content'
+            type='file'
+            htmlFor='content'
+            onChange={fileChangeHandler}
+        />
+        <Input placeholder='Description' 
+            className='default-input'
+            id='description'
+            name='description'
+            type='text'
+            htmlFor='description'
+            value={form.description}
+            onChange={changeHandler}
+        />
+        <div className='card-action'>
+            <Button type='submit' className='Button'>Update</Button>
+            <Button onClick={closeEditWindow} className='Button'>Close</Button>
+        </div>
+    </Form>
+    )
+  }
 
   return (
     <div>
+      {isAuthenticated && authState.roles.includes("ADMIN") 
+      ? 
+        <div className='content-admin-panel'>
+            <Button
+            className='Button'
+            onClick={startEditHandler} 
+            >Edit</Button>
+            <Button
+            className='Button'
+            onClick={deleteHandler}
+            >Delete</Button>
+        </div>
+      :
+        <></>
+      }
        {isAuthenticated || views.length < 10
        ? <ReactPlayer 
           url={contentPath}
@@ -70,7 +195,8 @@ const ContentPage = () => {
           <Button 
           className='like-button'
           disabled={!isAuthenticated}
-          liked={true}
+          onClick={likeHandler}
+          liked={false}
           />
         </div>
         
@@ -83,10 +209,10 @@ const ContentPage = () => {
           placeholder='Your comment...'
           id='comments'
           name='comments'
-          onChange={changeHandler}
+          onChange={commentChangeHandler}
           rows={2}/>
           <Button className='Button'
-          disabled={!isAuthenticated || form == null}>Leave a comment</Button>
+          disabled={!isAuthenticated || commentForm.comments === ""}>Leave a comment</Button>
         </div>
         
     </div>
