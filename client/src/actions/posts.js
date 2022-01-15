@@ -82,4 +82,30 @@ export const loadVideo = (url) => async (dispatch) => {
         dispatch(fetchFail(err))
     }
 }
- 
+
+export const likePost = (url, headers) => async (dispatch) => {
+    try{
+        const { data } = await api.likePost(url, headers);
+        dispatch(fetchSuccess(data))
+    } catch (err) {
+        console.log(err.message)
+        dispatch(fetchFail(err))
+    }
+}
+export const leaveComment = (url, comment, headers) => async (dispatch) => {
+    try{
+        const { data } = await api.leaveComment(url, comment, headers);
+        dispatch(fetchSuccess(data))
+    } catch (err) {
+        console.log(err.message)
+        dispatch(fetchFail(err))
+    }
+}
+export const incrementViews = (url) => async (dispatch) => {
+    try{
+       await api.incrementViews(url);
+    } catch (err) {
+        console.log(err.message)
+        dispatch(fetchFail(err))
+    }
+}

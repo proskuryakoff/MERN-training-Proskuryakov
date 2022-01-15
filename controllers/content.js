@@ -1,19 +1,29 @@
 const Post = require('../models/post');
 const User = require('../models/user');
+const Comment = require('../models/comments')
 const { validationResult } = require('express-validator');
+const path = require('path');
 const fs = require("fs");
 
 exports.getPost = (req, res) => {
     const postId = req.params.id;
+    const postComments = []
     Post.findById(postId)
     .then(post => {
-        res.status(200).json(post);
+      post.comments.map((comment) => {
+        Comment.findById(comment)
+        .then(comment => {
+          postComments.push(comment)
+        })
+      })
+        res.status(200).json({post, postComments});
     })
     .catch(err => {
         console.log(err);
         res.status(400).json({message: "Fetch error", error: err});
     })
 }
+
 exports.loadVideo = (req, res) => {
     const postId = req.params.id;
     Post.findById(postId)
@@ -92,9 +102,9 @@ exports.adminPostUpdate = async (req, res) => {
         error.statusCode = 403;
         throw error;
       }
-    //   if (contentLink !== post.contentLink) {
-    //     clearFile(post.contentLink);
-    //   }
+      if (contentLink !== post.contentLink) {
+        clearFile(post.contentLink);
+      }
       post.type = type;
       post.category = category;
       post.title = title;
@@ -126,7 +136,7 @@ exports.deletePost = async (req, res) => {
             error.statusCode = 403;
             throw error;
           }
-        //   clearFile(post.contentLink);
+          clearFile(post.contentLink);
           return Post.findByIdAndRemove(postId);
     })
     .then(result => {
@@ -144,6 +154,93 @@ exports.deletePost = async (req, res) => {
           err.statusCode = 500;
         }
       });
+}
+exports.userPostUpdate = async (req, res) => {
+  const postId = req.params.id;
+    if (req.params.action === 'like'){
+      Post.findById(postId)
+      .then(post => {
+          if (!post) {
+              const error = new Error('Could not find post.');
+              error.statusCode = 404;
+              throw error;
+            }
+        if(post.liked.includes(req.user.id.toString())) {
+          post.liked.pull(req.user.id.toString());
+        }
+        else {
+          post.liked.push(req.user.id.toString());
+        }
+        return post.save() 
+      })
+      .then(result => {
+        res.status(200).json(result);
+        return User.findById(req.user.id);
+      })
+      .then(user => {
+        if (user.liked.includes(postId.toString())){
+          user.liked.pull(postId.toString());
+        } else {
+          user.liked.push(postId.toString());
+        }
+        return user.save();
+      })
+      .catch(err => {
+        if (!err.statusCode) {
+          err.statusCode = 500;
+        }
+      });
+    }
+    if (req.params.action === 'comment') {
+      const text = req.body.comment;
+      const authorId = req.user.id;
+      const authorName = req.user.username;
+      const newComment = new Comment({
+        text: text,
+        author: {
+          id: authorId,
+          name: authorName
+        }
+      });
+      await newComment.save()
+      Post.findById(postId)
+      .then(post => {
+          if (!post) {
+              const error = new Error('Could not find post.');
+              error.statusCode = 404;
+              throw error;
+            }
+        post.comments.push(newComment.id);
+        return post.save() 
+      })
+      .then(result => {
+        res.status(200).json(result);
+      })
+      .catch(err => {
+        if (!err.statusCode) {
+          err.statusCode = 500;
+        }
+      });
+    }
+}
+
+exports.updateViewsAmount = async (req, res) => {
+  const postId = req.params.id;
+  Post.findById(postId) 
+  .then(post => {
+    if (!post) {
+        const error = new Error('Could not find post.');
+        error.statusCode = 404;
+        throw error;
+      }
+  post.viewed++;
+  return post.save() 
+  })
+  .catch(err => {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+  });
 }
 
 const clearFile = filePath => {

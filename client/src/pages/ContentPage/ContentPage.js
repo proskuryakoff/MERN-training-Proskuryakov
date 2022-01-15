@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useNavigate } from "react-router-dom";
-import { getContent, loadVideo, editPost, deletePost } from '../../actions/posts'
+import { getContent, loadVideo, editPost, deletePost, likePost, leaveComment, incrementViews} from '../../actions/posts'
 import ReactPlayer from 'react-player'
 import Loader from '../../components/Loader/Loader';
 import Button from '../../components/Button/Button';
@@ -15,7 +15,7 @@ const ContentPage = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate();
   const [commentForm,setCommentForm] = useState({
-    comments: ''
+    comment: ''
   });
   const [form,setForm] = useState({
     category: '',
@@ -52,18 +52,19 @@ const ContentPage = () => {
 
 
   const startHandler = () => {
-    if(!views.includes(postState.posts._id)){
-      views.push(postState.posts._id)
+    if(!views.includes(postState.posts.post._id)){
+      views.push(postState.posts.post._id)
       localStorage.setItem('views', JSON.stringify(views))
+      dispatch(incrementViews('/content/' + postId))
     }
   }
 
   const startEditHandler = () => {
     setEdit(true)
     setForm({
-      category: postState.posts.category,
-      title: postState.posts.title,
-      description: postState.posts.description, 
+      category: postState.posts.post.category,
+      title: postState.posts.post.title,
+      description: postState.posts.post.description, 
       content: null
     })
   }
@@ -82,8 +83,8 @@ const ContentPage = () => {
       formData.append('title', form.title)
       formData.append('description', form.description)
       if (form.content === null) {
-        formData.append('contentLink', postState.posts.contentLink)
-        formData.append('type', postState.posts.type)
+        formData.append('contentLink', postState.posts.post.contentLink)
+        formData.append('type', postState.posts.post.type)
       } else {
         formData.append('content', form.content)
       }
@@ -104,8 +105,22 @@ const ContentPage = () => {
     dispatch(deletePost(url, headers, navigate));
   }
 
-  const likeHandler = () => {
+  const likeHandler = (event) => {
+    event.preventDefault()
+    const headers = {
+      'Authorization': 'Bearer ' + authState.token
+    }
+    const url = '/content/' + postId + '/like'
+    dispatch(likePost(url, headers))
+  }
 
+  const commentHandler = (event) => {
+    event.preventDefault()
+    const headers = {
+      'Authorization': 'Bearer ' + authState.token
+    }
+    const url = '/content/' + postId + '/comment'
+    dispatch(leaveComment(url, {...commentForm}, headers))
   }
 
   if (postState.loading) {
@@ -179,18 +194,18 @@ const ContentPage = () => {
        {isAuthenticated || views.length < 10
        ? <ReactPlayer 
           url={contentPath}
-          width={ postState.posts.type === 'video/mp4' ? '100%' : '50%'}
-          height={postState.posts.type === 'video/mp4' ? '' : '50%'}
+          width={ postState.posts.post.type === 'video/mp4' ? '100%' : '50%'}
+          height={postState.posts.post.type === 'video/mp4' ? '' : '50%'}
           controls = {true}
           controlsList="nodownload"
           onStart = {startHandler}
        />
        : <p>You have viewed/listened more than 10 videos/audios</p>}
-        <h1 className='content-title'>{postState.posts.title}</h1>
+        <h1 className='content-title'>{postState.posts.post.title}</h1>
         <div className='info-field'>
           <div>
-            <div>Published: {FormatDate(postState.posts.created)}</div>
-            <div>Viewed: {postState.posts.viewed}</div>
+            <div>Published: {FormatDate(postState.posts.post.created)}</div>
+            <div>Viewed: {postState.posts.post.viewed}</div>
           </div>
           <Button 
           className='like-button'
@@ -200,19 +215,21 @@ const ContentPage = () => {
           />
         </div>
         
-        <div className='description-field'>{postState.posts.description}</div>
+        <div className='description-field'>{postState.posts.post.description}</div>
 
-        <div className='comments-field'>{postState.posts.comments}</div>
+        <div className='comments-field'>{postState.posts.post.comments}</div>
 
         <div className='comments-action-field'>
           <TextArea className='textarea-default'
           placeholder='Your comment...'
-          id='comments'
-          name='comments'
+          id='comment'
+          name='comment'
           onChange={commentChangeHandler}
           rows={2}/>
           <Button className='Button'
-          disabled={!isAuthenticated || commentForm.comments === ""}>Leave a comment</Button>
+          disabled={!isAuthenticated || commentForm.comments === ""}
+          onClick={commentHandler}
+          >Leave a comment</Button>
         </div>
         
     </div>
