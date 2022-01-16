@@ -6,5 +6,6 @@ export const categoryList = [
     'Pets',
     'Educational',
     'News',
-    'Cooking'
+    'Cooking',
+    'Audio'
 ]
