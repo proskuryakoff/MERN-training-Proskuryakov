@@ -34,3 +34,7 @@
     background-color: rgb(86, 21, 148);
     color: white;
 }
+
+.admin-panel {
+    display: inherit;
+}

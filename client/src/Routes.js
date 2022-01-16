@@ -1,13 +1,18 @@
-import {FEED_ROUTE, LOGIN_ROUTE, REGISTER_ROUTE, CREATE_PAGE_ROUTE} from './utils/Consts'
+import {FEED_ROUTE, LOGIN_ROUTE, REGISTER_ROUTE, CREATE_PAGE_ROUTE, USERS_LIST_ROUTE} from './utils/Consts'
 import AuthPage from './pages/AuthPage/Auth';
 import FeedPage from './pages/FeedPage/Feed';
 import CreatePage from './pages/CreatePage/CreatePage';
+import UsersPage from './pages/UsersPage/UsersPage';
 
 export const authRoutes = [
     {
         path: CREATE_PAGE_ROUTE,
         Element: <CreatePage />
-    }
+    },
+    {
+        path: USERS_LIST_ROUTE,
+        Element: <UsersPage />
+    },
 ]
 
 export const publicRoutes = [

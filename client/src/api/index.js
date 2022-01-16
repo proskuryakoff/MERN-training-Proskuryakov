@@ -22,3 +22,7 @@ export const leaveComment = (url, comment, headers) => API.post(url, comment, {
 export const incrementViews = (url) => API.post(url);
 
 export const authApi = (url, formData) => API.post(url, formData)
+
+export const getUsers = (headers) => API.get('/auth/users', {
+    headers: headers
+});

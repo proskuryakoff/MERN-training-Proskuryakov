@@ -22,16 +22,21 @@ const Navbar = (props) => {
     return(
         <header className='Navbar'>
             <NavLink to="/" className='nav-link'>Home</NavLink>
+            
+            <Search />
             {isAuthenticated && authState.roles.includes("ADMIN")
-            ? <NavLink to="/create" className='nav-link'>Create Post</NavLink>
+            ? <div className='admin-panel'>
+                <NavLink to="/create" className='nav-link'>Create Post</NavLink>
+                <NavLink to="/auth/users" className='nav-link'>User List</NavLink>
+              </div>
+            
             : <></>
             }
-            <Search />
-            
 
             {isAuthenticated 
             ? <div className='auth-nav'>
                 <NavLink to="#" className='nav-link'>{authState.username}</NavLink>
+                <NavLink to="#" className='nav-link'>Playlists</NavLink>
                 <NavLink to='/auth/logout' onClick={logoutHandler} className='nav-link'>Logout</NavLink>
               </div>
             : <div className='auth-nav'>

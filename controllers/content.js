@@ -107,6 +107,7 @@ exports.adminPostUpdate = async (req, res) => {
 
 exports.deletePost = async (req, res) => {
     const postId = req.params.id;
+    const comments = [];
     Post.findById(postId)
     .then(post => {
         if (!post) {

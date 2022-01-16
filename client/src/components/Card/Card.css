@@ -2,24 +2,27 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 300px;
-    margin: 20px 40%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    width: 50%;
     padding: 20px;
     border: 1px solid rgb(108, 9, 236);
     border-radius: 0.5rem;
 }
 
-h1{
-    text-align: center;
-    margin-top: 0; 
-}
-
 .react-thumbnail-generator img {
-    width: 300px;
+    width: 70%;
 }
 
 .title {
     text-decoration: none;
     font-weight: bold;
     font-size: 1.2em;
+}
+
+.card-created {
+    font-size: 0.8em;
+}
+.card-type {
+    font-size: 0.7em;
 }

@@ -12,6 +12,6 @@ router.post('/register', [
     check('password', 'Minimum length of password is 5 symbols').isLength({min: 5})
 ], controller.register)
 router.post('/login', controller.login)
-router.get('/users', roleMiddleware(['ADMIN']),controller.getUsers)
+router.get('/users', [authMiddleware, roleMiddleware(['ADMIN'])],controller.getUsers)
 
 module.exports = router;  

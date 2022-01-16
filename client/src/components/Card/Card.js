@@ -7,16 +7,17 @@ import './Card.css'
 const Card = (props) => {
     return(
     <div className="card">
+        <div className="card-type">{props.type === 'video/mp4' ? 'Video' : 'Audio'}</div>
         <Link to={'/content/'+ props.id} className="title">{props.title}</Link>
-            {/* {props.type === 'video/mp4' 
+            {props.type === 'video/mp4' 
                 ? 
                 <VideoThumbnail 
                 videoUrl={"http://localhost:4000/content/" + props.id + '/media'}
                 />
                 :
                 <></>
-            } */}
-        <div>Published: {FormatDate(props.created)}</div>
+            }
+        <div className="card-created">Published: {FormatDate(props.created)}</div>
     </div>
     )
 }

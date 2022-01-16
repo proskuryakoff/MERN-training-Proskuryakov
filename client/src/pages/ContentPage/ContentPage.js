@@ -194,8 +194,8 @@ const ContentPage = () => {
        {isAuthenticated || views.length < 10
        ? <ReactPlayer 
           url={contentPath}
-          width={ postState.posts.type === 'video/mp4' ? '100%' : '50%'}
-          height={postState.posts.type === 'video/mp4' ? '' : '50%'}
+          width={ postState.posts.type === 'video/mp4' ? '60%' : '50%'}
+          height={postState.posts.type === 'video/mp4' ? '' : '70px'}
           controls = {true}
           controlsList="nodownload"
           onStart = {startHandler}

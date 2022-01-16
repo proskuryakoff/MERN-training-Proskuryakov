@@ -1,6 +1,6 @@
 .form{
     width: 300px;
-    margin: 20px 40%;
+    margin: 20px auto;
     padding: 20px;
     border: 1px solid rgb(108, 9, 236);
     border-radius: 0.5rem;
