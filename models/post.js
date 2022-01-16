@@ -22,7 +22,7 @@ const postSchema = new Schema({
     comments: [
         {
             type: Types.ObjectId,
-            ref: "comments"
+            ref: "Comment"
         }
     ],
     created: {

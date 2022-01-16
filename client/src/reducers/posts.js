@@ -36,8 +36,10 @@ export default (state = initialState, action) => {
             return fetchFail(state, action);
         case actionTypes.CREATE: 
             return [...state, action.payload.post];
-        case actionTypes.DELETE: 
-            return [...state, action.payload];
+        case actionTypes.LIKE: 
+            return updateObject( state, {posts: action.payload, error: null, loading: false});
+        case actionTypes.COMMENT: 
+            return updateObject( state, {posts: action.payload, error: null, loading: false});
         default: 
             return state;
     }

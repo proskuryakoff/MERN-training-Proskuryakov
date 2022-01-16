@@ -13,7 +13,7 @@ const button = (props) => {
                 disabled={props.disabled}
                 >
                     <img src={likeActive} className='like-icon'/>
-                    Like
+                    {props.likeAmount}
                 </button>
             )
         }
@@ -24,7 +24,7 @@ const button = (props) => {
             disabled={props.disabled}
             >
                 <img src={like} className='like-icon'/>
-                Like
+                {props.likeAmount}
             </button>
         )
     }

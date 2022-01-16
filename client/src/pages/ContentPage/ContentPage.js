@@ -28,7 +28,7 @@ const ContentPage = () => {
   useEffect(() => {
     dispatch(getContent('/content/' + postId))
     dispatch(loadVideo('/content/' + postId + '/media'))
-  }, [dispatch, postId])
+  }, [postId, dispatch])
   const postState = useSelector((state) => state.posts);
   const authState = useSelector((state) => state.auth);
   const isAuthenticated = !!authState.token;
@@ -110,8 +110,7 @@ const ContentPage = () => {
     const headers = {
       'Authorization': 'Bearer ' + authState.token
     }
-    const url = '/content/' + postId + '/like'
-    dispatch(likePost(url, headers))
+    dispatch(likePost(postId, headers))
   }
 
   const commentHandler = (event) => {
@@ -119,9 +118,10 @@ const ContentPage = () => {
     const headers = {
       'Authorization': 'Bearer ' + authState.token
     }
-    const url = '/content/' + postId + '/comment'
-    dispatch(leaveComment(url, {...commentForm}, headers))
+    dispatch(leaveComment(postId, {...commentForm}, headers))
   }
+
+  const liked = postState.posts.liked
 
   if (postState.loading) {
     return (
@@ -211,13 +211,27 @@ const ContentPage = () => {
           className='like-button'
           disabled={!isAuthenticated}
           onClick={likeHandler}
-          liked={false}
+          liked={liked ? liked.includes(authState.userId) : false}
+          likeAmount={liked ? liked.length : 'Like'}
           />
         </div>
         
         <div className='description-field'>{postState.posts.description}</div>
 
-        <div className='comments-field'>{postState.posts.comments}</div>
+        <div className='comments-field'>{!postState.posts.comments 
+        ? 
+          <Loader />
+        : 
+        postState.posts.comments.map((comment) => {
+          return(
+            <div className='comment' key={comment._id}>
+              <div className='comment-author' key={comment._id + '-auth'}>{comment.author.name}</div>
+              <div className='comment-created' key={comment._id + '-time'}>{FormatDate(comment.created)}</div>
+              <div className='comment-text' key={comment._id + '-text'}>{comment.text}</div>
+            </div>
+          )
+        })
+        }</div>
 
         <div className='comments-action-field'>
           <TextArea className='textarea-default'
@@ -227,7 +241,7 @@ const ContentPage = () => {
           onChange={commentChangeHandler}
           rows={2}/>
           <Button className='Button'
-          disabled={!isAuthenticated || commentForm.comments === ""}
+          disabled={!isAuthenticated || commentForm.comment === ''}
           onClick={commentHandler}
           >Leave a comment</Button>
         </div>

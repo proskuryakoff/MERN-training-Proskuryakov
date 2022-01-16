@@ -7,7 +7,7 @@ const fs = require("fs");
 
 exports.getPost = (req, res) => {
     const postId = req.params.id;
-    Post.findById(postId)
+    Post.findById(postId).populate('comments')
     .then(post => {
         res.status(200).json(post);
     })
@@ -49,16 +49,6 @@ exports.loadVideo = (req, res) => {
         console.log(err);
         res.status(400).json({message: "Fetch error", error: err});
     })
-}
-
-exports.likePost = async (req, res) => {
-    try{
-        const postId = req.params.id;
-
-    } catch (err) {
-        console.log(err);
-        res.status(400).json({message: "Something went wrong!", error: err})
-    } 
 }
 
 exports.adminPostUpdate = async (req, res) => {
@@ -151,7 +141,16 @@ exports.deletePost = async (req, res) => {
 exports.userPostUpdate = async (req, res) => {
   const postId = req.params.id;
     if (req.params.action === 'like'){
-      Post.findById(postId)
+      User.findById(req.user.id) 
+      .then(user => {
+        if (user.liked.includes(postId.toString())){
+          user.liked.pull(postId.toString());
+        } else {
+          user.liked.push(postId.toString());
+        }
+        return user.save();
+      })
+      Post.findById(postId).populate('comments')
       .then(post => {
           if (!post) {
               const error = new Error('Could not find post.');
@@ -168,15 +167,6 @@ exports.userPostUpdate = async (req, res) => {
       })
       .then(result => {
         res.status(200).json(result);
-        return User.findById(req.user.id);
-      })
-      .then(user => {
-        if (user.liked.includes(postId.toString())){
-          user.liked.pull(postId.toString());
-        } else {
-          user.liked.push(postId.toString());
-        }
-        return user.save();
       })
       .catch(err => {
         if (!err.statusCode) {
@@ -205,6 +195,9 @@ exports.userPostUpdate = async (req, res) => {
             }
         post.comments.push(newComment.id);
         return post.save() 
+      })
+      .then(result => {
+        return Post.findById(postId).populate('comments')
       })
       .then(result => {
         res.status(200).json(result);
