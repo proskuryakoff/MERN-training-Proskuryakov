@@ -7,16 +7,9 @@ const fs = require("fs");
 
 exports.getPost = (req, res) => {
     const postId = req.params.id;
-    const postComments = []
     Post.findById(postId)
     .then(post => {
-      post.comments.map((comment) => {
-        Comment.findById(comment)
-        .then(comment => {
-          postComments.push(comment)
-        })
-      })
-        res.status(200).json({post, postComments});
+        res.status(200).json(post);
     })
     .catch(err => {
         console.log(err);

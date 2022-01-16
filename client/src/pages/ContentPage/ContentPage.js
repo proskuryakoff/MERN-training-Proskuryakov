@@ -26,13 +26,13 @@ const ContentPage = () => {
   const [isEditing, setEdit] = useState(false)
   const postId = useParams().id;
   useEffect(() => {
-    dispatch(getContent('/content/' + postId + '/get'))
-    dispatch(loadVideo('/content/' + postId))
+    dispatch(getContent('/content/' + postId))
+    dispatch(loadVideo('/content/' + postId + '/media'))
   }, [dispatch, postId])
   const postState = useSelector((state) => state.posts);
   const authState = useSelector((state) => state.auth);
   const isAuthenticated = !!authState.token;
-  const contentPath = 'http://localhost:4000/content/' + postId
+  const contentPath = 'http://localhost:4000/content/' + postId + '/media'
 
   let views = [];
 
@@ -52,8 +52,8 @@ const ContentPage = () => {
 
 
   const startHandler = () => {
-    if(!views.includes(postState.posts.post._id)){
-      views.push(postState.posts.post._id)
+    if(!views.includes(postState.posts._id)){
+      views.push(postState.posts._id)
       localStorage.setItem('views', JSON.stringify(views))
       dispatch(incrementViews('/content/' + postId))
     }
@@ -62,9 +62,9 @@ const ContentPage = () => {
   const startEditHandler = () => {
     setEdit(true)
     setForm({
-      category: postState.posts.post.category,
-      title: postState.posts.post.title,
-      description: postState.posts.post.description, 
+      category: postState.posts.category,
+      title: postState.posts.title,
+      description: postState.posts.description, 
       content: null
     })
   }
@@ -83,8 +83,8 @@ const ContentPage = () => {
       formData.append('title', form.title)
       formData.append('description', form.description)
       if (form.content === null) {
-        formData.append('contentLink', postState.posts.post.contentLink)
-        formData.append('type', postState.posts.post.type)
+        formData.append('contentLink', postState.posts.contentLink)
+        formData.append('type', postState.posts.type)
       } else {
         formData.append('content', form.content)
       }
@@ -194,18 +194,18 @@ const ContentPage = () => {
        {isAuthenticated || views.length < 10
        ? <ReactPlayer 
           url={contentPath}
-          width={ postState.posts.post.type === 'video/mp4' ? '100%' : '50%'}
-          height={postState.posts.post.type === 'video/mp4' ? '' : '50%'}
+          width={ postState.posts.type === 'video/mp4' ? '100%' : '50%'}
+          height={postState.posts.type === 'video/mp4' ? '' : '50%'}
           controls = {true}
           controlsList="nodownload"
           onStart = {startHandler}
        />
        : <p>You have viewed/listened more than 10 videos/audios</p>}
-        <h1 className='content-title'>{postState.posts.post.title}</h1>
+        <h1 className='content-title'>{postState.posts.title}</h1>
         <div className='info-field'>
           <div>
-            <div>Published: {FormatDate(postState.posts.post.created)}</div>
-            <div>Viewed: {postState.posts.post.viewed}</div>
+            <div>Published: {FormatDate(postState.posts.created)}</div>
+            <div>Viewed: {postState.posts.viewed}</div>
           </div>
           <Button 
           className='like-button'
@@ -215,9 +215,9 @@ const ContentPage = () => {
           />
         </div>
         
-        <div className='description-field'>{postState.posts.post.description}</div>
+        <div className='description-field'>{postState.posts.description}</div>
 
-        <div className='comments-field'>{postState.posts.post.comments}</div>
+        <div className='comments-field'>{postState.posts.comments}</div>
 
         <div className='comments-action-field'>
           <TextArea className='textarea-default'

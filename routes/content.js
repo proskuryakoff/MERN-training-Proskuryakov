@@ -6,8 +6,8 @@ const fileMiddleware = require('../middleware/fileMiddleware')
 const authMiddleware = require('../middleware/authMiddleware');
 const roleMiddleware = require('../middleware/roleMiddleware');
 
-router.get('/:id/get', controller.getPost);
-router.get('/:id', controller.loadVideo);
+router.get('/:id', controller.getPost);
+router.get('/:id/media', controller.loadVideo);
 
 router.post('/:id/:action', authMiddleware, controller.userPostUpdate)
 router.post('/:id/', controller.updateViewsAmount)

@@ -8,14 +8,14 @@ const Card = (props) => {
     return(
     <div className="card">
         <Link to={'/content/'+ props.id} className="title">{props.title}</Link>
-            {props.type === 'video/mp4' 
+            {/* {props.type === 'video/mp4' 
                 ? 
                 <VideoThumbnail 
-                videoUrl={"http://localhost:4000/content/" + props.id}
+                videoUrl={"http://localhost:4000/content/" + props.id + '/media'}
                 />
                 :
                 <></>
-            }
+            } */}
         <div>Published: {FormatDate(props.created)}</div>
     </div>
     )
