@@ -10,7 +10,7 @@ exports.getPosts = (req, res) => {
     })
     .catch (err => {
         console.log(err);
-        res.status(400).json({message: "Fetching posts error", error: err})
+        res.status(500).json({message: "Fetching posts error", error: err})
     })
 }
 
@@ -31,6 +31,6 @@ exports.createPost = async (req, res) => {
         return res.json({message: "A new post was created successfully"})
     } catch (err) {
         console.log(err);
-        res.status(400).json({message: "Post creation error", error: err})
+        res.status(500).json({message: "Post creation error", error: err})
     }  
 }

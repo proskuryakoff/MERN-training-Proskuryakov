@@ -83,7 +83,7 @@ const UsersPage = () => {
 
   return (
     <div>
-      <table class="table">
+      <table className="table">
 	      <thead>
 		      <tr>
 		      	<th>User ID</th>

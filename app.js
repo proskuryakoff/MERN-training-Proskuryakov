@@ -4,11 +4,9 @@ const mongoose = require("mongoose");
 const config = require('config');
 const path = require('path');
 const cors = require('cors');
-const bodyParser = require('body-parser');
 const authRouter = require('./routes/auth');
 const feedRouter = require('./routes/feed');
 const contentRouter = require('./routes/content')
-
 
 const PORT = config.get('port');
 const MONGO_URI = config.get('mongoUri');
