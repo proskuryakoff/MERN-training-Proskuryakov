@@ -222,6 +222,10 @@ const ContentPage = () => {
         ? 
           <Loader />
         : 
+        postState.posts.comments.length === 0 
+        ? 
+          <p>There no comments yet</p> 
+        :
         postState.posts.comments.map((comment) => {
           return(
             <div className='comment' key={comment._id}>
