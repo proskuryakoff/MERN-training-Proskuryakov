@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
-import { getUsers, editUser } from '../../actions/users';
+import { getUsers, editUser, deleteUser } from '../../actions/users';
 import Input from '../../components/Input/Input';
 import Form from '../../components/Form/Form';
 import Button from '../../components/Button/Button';
@@ -60,8 +60,13 @@ const UsersPage = () => {
           throw err;
       }
     }
-    const userDeleteHandler = () => {      
-
+    const userDeleteHandler = (event) => {      
+      event.preventDefault()
+      const headers = {
+        'Authorization': 'Bearer ' + authState.token
+      }
+      const url = '/auth/users/' + event.target.id
+      dispatch(deleteUser(url, headers, navigate));
     }
 
     if (usersState.loading) {
@@ -107,7 +112,7 @@ const UsersPage = () => {
           <label htmlFor='role-user'>User</label>
         </div>
         <div className='card-action'>
-            <Button type='submit' className='Button'>Update</Button>
+            <Button type='submit' disabled={!form.roles || !form.username} className='Button'>Update</Button>
             <Button onClick={closeEditWindow} className='Button'>Close</Button>
         </div>
         </Form>
@@ -135,8 +140,8 @@ const UsersPage = () => {
                 <td className='user-username'>{user.username}</td>
                 <td className='user-roles'>{user.roles}</td>
                 <td>
-                  <Button className='edit-button' id={user._id} onClick={startEditHandler}>Edit</Button>
-                  <Button className='delete-button' onClick={userDeleteHandler}>Delete</Button>
+                  <Button className='edit-button' id={user._id} disabled={user._id === authState.userId} onClick={startEditHandler}>Edit</Button>
+                  <Button className='delete-button' id={user._id} disabled={user._id === authState.userId} onClick={userDeleteHandler}>Delete</Button>
                 </td>
               </tr>
             )

@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const Role = require('../models/Role');
+const Comment = require('../models/comments')
 const bcrypt = require('bcryptjs');
 const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
@@ -105,6 +106,24 @@ class authController {
               err.statusCode = 500;
             }
         });
+    }
+    async deleteUser(req, res) {
+        const userId = req.params.id;
+        User.findById(userId)
+        .then(user => {
+            if (!user) {
+                return res.status(400).json({message: 'User is not found'})
+              }
+              return User.findByIdAndRemove(userId);
+        })
+          .then(result => {
+            res.status(200).json({ message: 'Deleted user.' });
+          })
+          .catch(err => {
+            if (!err.statusCode) {
+              err.statusCode = 500;
+            }
+          });
     }
 }
 

@@ -82,7 +82,12 @@ const CreatePage = () => {
         />
 
         <div className='card-action'>
-            <Button type='submit' className='Button'>Create</Button>
+            <Button 
+            type='submit' 
+            className='Button' 
+            disabled={!form.category || !form.title || !form.description || !form.content}
+            >Create</Button>
+            <Button onClick={navigate("/", { replace: true })} className='Button'>Close</Button>
         </div>
     </Form>
   );

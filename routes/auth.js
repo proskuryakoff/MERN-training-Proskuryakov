@@ -8,6 +8,7 @@ const roleMiddleware = require('../middleware/roleMiddleware')
 router.post('/register', [
     check('email', 'Email should not be empty').notEmpty(),
     check('email', 'Email is incorrect').isEmail(),
+    check('username', 'Username length must be between 4 and 15 symbols').isLength({min: 4, max: 15}),
     check('password', 'Minimum length of password is 5 symbols').isLength({min: 5})
 ], controller.register)
 router.post('/login', controller.login)
@@ -18,5 +19,5 @@ router.put('/users/:id', [
     check('username', 'Username should not be empty').notEmpty(),
     check('roles', 'Roles should not be empty').notEmpty()
 ],controller.updateUser)
-
+router.delete('/users/:id', [authMiddleware, roleMiddleware(['ADMIN'])], controller.deleteUser)
 module.exports = router;  

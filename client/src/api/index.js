@@ -29,3 +29,6 @@ export const getUsers = (headers) => API.get('/auth/users', {
 export const updateUser = (url, updatedUser, headers) => API.put(url, updatedUser, {
     headers: headers
 });
+export const deleteUser = (url, headers) => API.delete(url, {
+    headers: headers
+});

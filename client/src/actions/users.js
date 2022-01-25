@@ -40,3 +40,11 @@ export const editUser = (url, user, headers, navigate) => async (dispatch) => {
     }
     navigate("/auth/users", { replace: true })
 }
+export const deleteUser = (url, headers, navigate) => async (dispatch) => {
+    try{
+        await api.deleteUser(url, headers);
+    } catch (err) {
+        console.log(err.message)
+    }
+    navigate("/", { replace: true })
+}
