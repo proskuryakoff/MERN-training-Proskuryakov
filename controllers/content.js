@@ -55,9 +55,7 @@ exports.adminPostUpdate = async (req, res) => {
     const postId = req.params.id;
     const validationErrors = validationResult(req);
     if (!validationErrors.isEmpty()) {
-        const error = new Error('Validation failed, entered data is incorrect.');
-        error.statusCode = 422;
-        throw error;
+      return res.status(400).json({message: "Entered data is incorrect!", errors: validationErrors.array()})
     }
     const category = req.body.category;
     const title = req.body.title;

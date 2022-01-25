@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getUsers } from '../../actions/users'
+import { useNavigate } from "react-router-dom";
+import { getUsers, editUser } from '../../actions/users';
 import Input from '../../components/Input/Input';
 import Form from '../../components/Form/Form';
 import Button from '../../components/Button/Button';
@@ -8,9 +9,11 @@ import Loader from '../../components/Loader/Loader';
 import './UsersPage.css'
  
 const UsersPage = () => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [isEditing, setEdit] = useState(false);
     const [form,setForm] = useState({
+      id: null,
       username: '',
       roles: null,
     });
@@ -26,11 +29,12 @@ const UsersPage = () => {
     const changeHandler = event => {
       setForm({...form, [event.target.name]: event.target.value})
     }
-    const startEditHandler = () => {
+    const startEditHandler = (event) => {
       setEdit(true)
+      const currentUser = usersState.users.find(user => user._id === event.target.id);
       setForm({
-        username: usersState.users.username,
-        roles: usersState.users.roles,
+        id: currentUser._id,
+        username: currentUser.username,
       })
     }
 
@@ -38,8 +42,23 @@ const UsersPage = () => {
       setEdit(false)
     }
 
-    const userEditHandler = () => {      
-
+    const userEditHandler = (event) => {      
+      event.preventDefault()
+      const userId = form.id;
+      try{
+        const headers = {
+          'Authorization': 'Bearer ' + authState.token
+        }
+        const url = '/auth/users/' + userId
+        const formData = new FormData();
+        formData.append('username', form.username)
+        formData.append('roles', form.roles)
+        dispatch(editUser(url, formData, headers, navigate));
+      }
+      catch(err){
+          console.log(err);
+          throw err;
+      }
     }
     const userDeleteHandler = () => {      
 
@@ -64,15 +83,29 @@ const UsersPage = () => {
             value={form.username}
             onChange={changeHandler}
         />
-        <Input placeholder='Roles' 
-            className='default-input'
-            id='roles'
-            name='roles'
-            type='text'
-            htmlFor='roles'
-            value={form.roles}
-            onChange={changeHandler}
-        />
+        <p className='roles-label'>Roles</p>
+        <div className='roles-field'>
+          <Input placeholder='Roles' 
+              className='role-input'
+              id='role-admin'
+              name='roles'
+              type='radio'
+              htmlFor='roles'
+              value='ADMIN'
+              onChange={changeHandler}
+          />
+          <label htmlFor='role-admin'>Admin</label>
+          <Input placeholder='Roles' 
+              className='role-input'
+              id='role-user'
+              name='roles'
+              type='radio'
+              htmlFor='roles'
+              value='USER'
+              onChange={changeHandler}
+          />
+          <label htmlFor='role-user'>User</label>
+        </div>
         <div className='card-action'>
             <Button type='submit' className='Button'>Update</Button>
             <Button onClick={closeEditWindow} className='Button'>Close</Button>
@@ -97,12 +130,12 @@ const UsersPage = () => {
           { usersState.users.map((user) => {
               return (
               <tr key={user._id}>
-                <td>{user._id}</td>
-                <td>{user.email}</td>
-                <td>{user.username}</td>
-                <td>{user.roles}</td>
+                <td className='user-id'>{user._id}</td>
+                <td className='user-email'>{user.email}</td>
+                <td className='user-username'>{user.username}</td>
+                <td className='user-roles'>{user.roles}</td>
                 <td>
-                  <Button className='edit-button' onClick={startEditHandler}>Edit</Button>
+                  <Button className='edit-button' id={user._id} onClick={startEditHandler}>Edit</Button>
                   <Button className='delete-button' onClick={userDeleteHandler}>Delete</Button>
                 </td>
               </tr>

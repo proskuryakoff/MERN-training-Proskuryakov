@@ -74,8 +74,37 @@ class authController {
             res.json(users)
         } catch (err) {
             console.log(err);
-
         }
+    }
+
+    async updateUser(req, res) {
+        const userId = req.params.id;
+        const validationErrors = validationResult(req);
+        if (!validationErrors.isEmpty()) {
+            return res.status(400).json({message: "Entered data is incorrect!", errors: validationErrors.array()})
+        }
+        const username = req.body.username;
+        const roles = req.body.roles;
+        User.findById(userId)
+        .then(user => {
+          if (!user) {
+            const error = new Error('Could not find post.');
+            error.statusCode = 404;
+            throw error;
+          }
+          user.username = username;
+          user.roles = [];
+          user.roles.push(roles);
+          return user.save();
+        })
+        .then(result => {
+            res.status(200).json(result);
+        })
+        .catch(err => {
+            if (!err.statusCode) {
+              err.statusCode = 500;
+            }
+        });
     }
 }
 

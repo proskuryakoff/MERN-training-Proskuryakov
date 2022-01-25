@@ -34,6 +34,8 @@ export default (state = initialState, action) => {
             return fetchUsersSuccess(state, action);
         case actionTypes.FETCH_USERS_FAIL:
             return fetchUsersFail(state, action);
+        case actionTypes.UPDATE_USER:
+            return updateObject( state, {posts: action.payload, error: null, loading: false});
         default: 
             return state;
     }

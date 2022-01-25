@@ -10,6 +10,7 @@ const button = (props) => {
                 <button
                 className='like-button-active'
                 onClick={props.onClick} 
+                id={props.id}
                 disabled={props.disabled}
                 >
                     <img src={likeActive} className='like-icon'/>
@@ -21,6 +22,7 @@ const button = (props) => {
             <button
             className={props.className}
             onClick={props.onClick} 
+            id={props.id}
             disabled={props.disabled}
             >
                 <img src={like} className='like-icon'/>
@@ -33,6 +35,7 @@ const button = (props) => {
         onClick={props.onClick} 
         disabled={props.disabled}
         type={props.type}
+        id={props.id}
         >
             {props.loading ? 'Loading...' : props.children}
         </button>

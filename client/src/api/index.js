@@ -26,3 +26,6 @@ export const authApi = (url, formData) => API.post(url, formData)
 export const getUsers = (headers) => API.get('/auth/users', {
     headers: headers
 });
+export const updateUser = (url, updatedPost, headers) => API.put(url, updatedPost, {
+    headers: headers
+});

@@ -38,7 +38,6 @@ export const createPost = (post, headers, navigate) => async (dispatch) => {
     try{
         const { data } = await api.createPost(post, headers);
         dispatch({type: actionTypes.CREATE, payload: {data, post}})
-        
     } catch (err) {
         console.log(err.message)
     }
@@ -47,8 +46,6 @@ export const createPost = (post, headers, navigate) => async (dispatch) => {
 export const editPost = (url, post, headers, navigate) => async (dispatch) => {
     try{
         const { data } = await api.updatePost(url, post, headers);
-        dispatch({type: actionTypes.CREATE, payload: {data, post}})
-        
     } catch (err) {
         console.log(err.message)
     }

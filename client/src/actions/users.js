@@ -30,3 +30,13 @@ export const getUsers = (headers) => async (dispatch) => {
         dispatch(fetchUsersFail(err))
     }
 }
+
+export const editUser = (url, user, headers, navigate) => async (dispatch) => {
+    try{
+        const { data } = await api.updateUser(url, user, headers);
+        dispatch({type: actionTypes.UPDATE_USER, payload: data})
+    } catch (err) {
+        console.log(err.message)
+    }
+    navigate("/auth/users", { replace: true })
+}
