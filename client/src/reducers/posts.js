@@ -34,11 +34,13 @@ export default (state = initialState, action) => {
             return fetchSuccess(state, action);
         case actionTypes.FETCH_FAIL:
             return fetchFail(state, action);
-        case actionTypes.CREATE: 
+        case actionTypes.CREATE_POST: 
             return [...state, action.payload.post];
-        case actionTypes.LIKE: 
+        case actionTypes.UPDATE_POST:
             return updateObject( state, {posts: action.payload, error: null, loading: false});
-        case actionTypes.COMMENT: 
+        case actionTypes.LIKE_POST: 
+            return updateObject( state, {posts: action.payload, error: null, loading: false});
+        case actionTypes.COMMENT_POST: 
             return updateObject( state, {posts: action.payload, error: null, loading: false});
         default: 
             return state;

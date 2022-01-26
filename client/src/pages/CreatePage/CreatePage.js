@@ -27,6 +27,10 @@ const CreatePage = () => {
     setForm({...form, [event.target.name]: event.target.files[0]})
   }
 
+  const closeHandler = () => {
+    navigate("/", { replace: true })
+  }
+
   const createPostHandler = async(event) => {
     event.preventDefault()
     try{
@@ -87,7 +91,7 @@ const CreatePage = () => {
             className='Button' 
             disabled={!form.category || !form.title || !form.description || !form.content}
             >Create</Button>
-            <Button onClick={navigate("/", { replace: true })} className='Button'>Close</Button>
+            <Button onClick={closeHandler} className='Button'>Close</Button>
         </div>
     </Form>
   );

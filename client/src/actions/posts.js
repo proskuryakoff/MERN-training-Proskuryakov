@@ -37,19 +37,19 @@ export const getPosts = () => async (dispatch) => {
 export const createPost = (post, headers, navigate) => async (dispatch) => {
     try{
         const { data } = await api.createPost(post, headers);
-        dispatch({type: actionTypes.CREATE, payload: {data, post}})
+        dispatch({type: actionTypes.CREATE_POST, payload: {data, post}})
     } catch (err) {
         console.log(err.message)
     }
     navigate("/", { replace: true })
 }
-export const editPost = (url, post, headers, navigate) => async (dispatch) => {
+export const editPost = (url, post, headers) => async (dispatch) => {
     try{
         const { data } = await api.updatePost(url, post, headers);
+        dispatch({type: actionTypes.UPDATE_POST, payload: data})
     } catch (err) {
         console.log(err.message)
     }
-    navigate("/", { replace: true })
 }
 export const deletePost = (url, headers, navigate) => async (dispatch) => {
     try{
@@ -83,7 +83,7 @@ export const likePost = (id, headers) => async (dispatch) => {
     try{
         const url = '/content/' + id + '/like'
         const { data } = await api.likePost(url, headers);
-        dispatch({ type: actionTypes.LIKE, payload: data });
+        dispatch({ type: actionTypes.LIKE_POST, payload: data });
     } catch (err) {
         console.log(err.message)
         dispatch(fetchFail(err))
@@ -93,7 +93,7 @@ export const leaveComment = (id, comment, headers) => async (dispatch) => {
     try{
         const url = '/content/' + id + '/comment'
         const { data } = await api.leaveComment(url, comment, headers);
-        dispatch({ type: actionTypes.COMMENT, payload: data });
+        dispatch({ type: actionTypes.COMMENT_POST, payload: data });
     } catch (err) {
         console.log(err.message)
         dispatch(fetchFail(err))

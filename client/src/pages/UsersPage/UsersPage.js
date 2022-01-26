@@ -50,15 +50,13 @@ const UsersPage = () => {
           'Authorization': 'Bearer ' + authState.token
         }
         const url = '/auth/users/' + userId
-        const formData = new FormData();
-        formData.append('username', form.username)
-        formData.append('roles', form.roles)
-        dispatch(editUser(url, formData, headers, navigate));
+        dispatch(editUser(url, {...form}, headers));
       }
       catch(err){
           console.log(err);
           throw err;
       }
+      setEdit(false)
     }
     const userDeleteHandler = (event) => {      
       event.preventDefault()

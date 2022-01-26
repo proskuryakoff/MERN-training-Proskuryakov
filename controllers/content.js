@@ -71,7 +71,7 @@ exports.adminPostUpdate = async (req, res) => {
         error.statusCode = 422;
         throw error;
     }
-    Post.findById(postId)
+    Post.findById(postId).populate('comments')
     .then(post => {
       if (!post) {
         const error = new Error('Could not find post.');
@@ -94,7 +94,7 @@ exports.adminPostUpdate = async (req, res) => {
       return post.save();
     })
     .then(result => {
-        res.status(200).json({ message: 'Post updated!' });
+        res.status(200).json(result);
     })
     .catch(err => {
         if (!err.statusCode) {
@@ -105,7 +105,7 @@ exports.adminPostUpdate = async (req, res) => {
 
 exports.deletePost = async (req, res) => {
     const postId = req.params.id;
-    const comments = [];
+    const commentsArr = [];
     Post.findById(postId)
     .then(post => {
         if (!post) {

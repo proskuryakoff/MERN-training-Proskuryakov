@@ -88,12 +88,13 @@ const ContentPage = () => {
       } else {
         formData.append('content', form.content)
       }
-      dispatch(editPost(url, formData, headers, navigate));
+      dispatch(editPost(url, formData, headers));
     }
     catch(err){
         console.log(err);
         throw err;
     }
+    setEdit(false);
   }
 
   const deleteHandler = (event) => {
@@ -200,7 +201,7 @@ const ContentPage = () => {
           controlsList="nodownload"
           onStart = {startHandler}
        />
-       : <p>You have viewed/listened more than 10 videos/audios</p>}
+       : <p className='limit-notification'>You have viewed/listened more than 10 videos/audios</p>}
         <h1 className='content-title'>{postState.posts.title}</h1>
         <div className='info-field'>
           <div>
@@ -239,11 +240,13 @@ const ContentPage = () => {
 
         <div className='comments-action-field'>
           <TextArea className='textarea-default'
-          placeholder='Your comment...'
+          placeholder={isAuthenticated ? 'Your comment...' : "You cannot post comments until you are logged in"}
           id='comment'
           name='comment'
           onChange={commentChangeHandler}
-          rows={2}/>
+          rows={2}
+          disabled={!isAuthenticated}
+          />
           <Button className='Button'
           disabled={!isAuthenticated || commentForm.comment === ''}
           onClick={commentHandler}

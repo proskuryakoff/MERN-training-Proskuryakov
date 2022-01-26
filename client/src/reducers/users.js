@@ -35,7 +35,7 @@ export default (state = initialState, action) => {
         case actionTypes.FETCH_USERS_FAIL:
             return fetchUsersFail(state, action);
         case actionTypes.UPDATE_USER:
-            return updateObject( state, {posts: action.payload, error: null, loading: false});
+            return updateObject( state, {users: state.users.map((user) => (user._id === action.payload._id ? action.payload : user)), error: null, loading: false});
         default: 
             return state;
     }

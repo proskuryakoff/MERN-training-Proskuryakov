@@ -67,8 +67,8 @@ if (authState.loading) {
         }
         <div className='card-action'>
             {isSignup 
-            ? <Button type='submit' className='Button'>Registration</Button> 
-            : <Button type='submit' className='Button'>Log In</Button>}
+            ? <Button type='submit' className='Button' disabled={!form.email || !form.password || !form.username}>Registration</Button> 
+            : <Button type='submit' className='Button' disabled={!form.email || !form.password}>Log In</Button>}
         </div>
         {isSignup
         ? <div>Have an account already? <NavLink onClick={switchAuthModeHandler} to='/auth/login'>Sign In</NavLink></div>

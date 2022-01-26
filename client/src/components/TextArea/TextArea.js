@@ -11,6 +11,7 @@ const TextArea = (props) => {
         onChange={props.onChange}
         onBlur={props.onBlur} 
         rows={props.rows}
+        disabled={props.disabled}
         />
     )
 }
