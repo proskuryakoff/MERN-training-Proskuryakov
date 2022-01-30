@@ -22,7 +22,7 @@ const Navbar = (props) => {
 
     return(
         <header className='Navbar'>
-            <NavLink to="/" className='nav-link'>Home</NavLink>
+            <a href="/" className='nav-link'>Home</a>
             
             <Search />
             {isAuthenticated && authState.roles.includes("ADMIN")
