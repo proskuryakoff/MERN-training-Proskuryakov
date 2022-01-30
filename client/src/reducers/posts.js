@@ -32,6 +32,8 @@ export default (state = initialState, action) => {
             return fetchStart(state, action);
         case actionTypes.FETCH_SUCCESS:
             return fetchSuccess(state, action);
+        case actionTypes.FETCH_SUCCESS_BY_SEARCH:
+            return fetchSuccess(state, action);
         case actionTypes.FETCH_FAIL:
             return fetchFail(state, action);
         case actionTypes.CREATE_POST: 

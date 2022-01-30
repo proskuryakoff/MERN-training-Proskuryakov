@@ -4,6 +4,7 @@ import Search from '../Search/Search'
 import { NavLink } from 'react-router-dom';
 import './Navbar.css'
 import { logout } from '../../actions/auth';
+import { getPosts } from '../../actions/posts';
     
 const Navbar = (props) => {
     const dispatch = useDispatch();

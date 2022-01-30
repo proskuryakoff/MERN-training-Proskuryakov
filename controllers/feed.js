@@ -13,6 +13,16 @@ exports.getPosts = (req, res) => {
         res.status(500).json({message: "Fetching posts error", error: err})
     })
 }
+exports.getPostsBySearch = async (req, res) => {
+    const { searchQuery } = req.query
+    try {
+        const title = new RegExp(searchQuery, 'i')
+        const posts = await Post.find({title});
+        res.status(200).json(posts);
+    } catch (err) {
+        res.status(404).json({message: "Searching posts error", error: err})
+    }
+}
 
 exports.createPost = async (req, res) => {
     try{

@@ -15,6 +15,12 @@ export const fetchSuccess = (posts) => {
         posts: posts
     };
 };
+export const fetchSuccessBySearch = (posts) => {
+    return {
+        type: actionTypes.FETCH_SUCCESS_BY_SEARCH,
+        posts: posts
+    };
+};
 export const fetchFail = (error) => {
     return {
         type: actionTypes.FETCH_FAIL,
@@ -28,6 +34,16 @@ export const getPosts = () => async (dispatch) => {
         dispatch(fetchStart())
         const { data } = await api.fetchPosts();
         dispatch(fetchSuccess(data))
+    } catch (err) {
+        console.log(err.message)
+        dispatch(fetchFail(err))
+    }
+}
+export const getPostsBySearch = (searchQuery) => async (dispatch) => {
+    try {
+        dispatch(fetchStart())
+        const { data } = await api.fetchPostsBySearch(searchQuery.searchQuery);
+        dispatch(fetchSuccessBySearch(data))
     } catch (err) {
         console.log(err.message)
         dispatch(fetchFail(err))

@@ -8,6 +8,8 @@ const roleMiddleware = require('../middleware/roleMiddleware');
 
 router.get('/', controller.getPosts);
 
+router.get('/search', controller.getPostsBySearch);
+
 router.post('/', [
     authMiddleware,
     roleMiddleware(['ADMIN']),
