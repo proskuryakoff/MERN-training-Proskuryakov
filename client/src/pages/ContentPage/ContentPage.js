@@ -202,7 +202,13 @@ const ContentPage = () => {
           onStart = {startHandler}
        />
        : <p className='limit-notification'>You have viewed/listened more than 10 videos/audios</p>}
-        <h1 className='content-title'>{postState.posts.title}</h1>
+       <div className='content-header'>
+          <h1 className='content-title'>{postState.posts.title}</h1>
+          <Button
+            className='Button'
+          >+ Add to Playlist</Button>
+       </div>
+        
         <div className='info-field'>
           <div>
             <div>Published: {FormatDate(postState.posts.created)}</div>

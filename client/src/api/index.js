@@ -36,3 +36,6 @@ export const deleteUser = (url, headers) => API.delete(url, {
 export const getPlaylists = (headers) => API.get('/playlists', {
     headers: headers
 });
+export const deletePlaylist = (url, headers) => API.delete(url, {
+    headers: headers
+});

@@ -30,3 +30,12 @@ export const getPlaylists = (headers) => async (dispatch) => {
         dispatch(fetchPlaylistsFail(err))
     }
 }
+
+export const deletePlaylist = (url, headers, navigate) => async (dispatch) => {
+    try{
+        await api.deletePlaylist(url, headers);
+    } catch (err) {
+        console.log(err.message)
+    }
+    navigate("/", { replace: true })
+}
