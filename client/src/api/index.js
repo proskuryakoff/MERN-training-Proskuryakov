@@ -33,3 +33,6 @@ export const updateUser = (url, updatedUser, headers) => API.put(url, updatedUse
 export const deleteUser = (url, headers) => API.delete(url, {
     headers: headers
 });
+export const getPlaylists = (headers) => API.get('/playlists', {
+    headers: headers
+});

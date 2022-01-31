@@ -6,11 +6,12 @@ const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 
-const generateAccessToken = (id, username, roles) => {
+const generateAccessToken = (id, username, roles, playlists) => {
     const payload = {
         id,
         username,
-        roles
+        roles, 
+        playlists
     }
     return jwt.sign(
         payload, 
@@ -37,7 +38,7 @@ class authController {
             await user.save()
             const userId = user._id;
             const roles = user.roles;
-            const token = generateAccessToken(user._id, username, user.roles);
+            const token = generateAccessToken(user._id, username, user.roles, user.playlists);
             const expiresIn = 3600;
             return res.json({message: "User was created successfully", token, userId, roles, username, expiresIn})
         } catch (err) {
@@ -60,7 +61,7 @@ class authController {
             const userId = user._id;
             const roles = user.roles;
             const username = user.username;
-            const token = generateAccessToken(user._id, username, user.roles);
+            const token = generateAccessToken(user._id, username, user.roles, user.playlists);
             const expiresIn = 3600;
             return res.json({message: "Logged in successfully", token, userId, roles, username, expiresIn})
         } catch (err) {

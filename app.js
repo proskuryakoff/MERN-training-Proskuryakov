@@ -6,6 +6,7 @@ const path = require('path');
 const cors = require('cors');
 const authRouter = require('./routes/auth');
 const feedRouter = require('./routes/feed');
+const playlistsRouter = require('./routes/playlists');
 const contentRouter = require('./routes/content')
 
 const PORT = config.get('port');
@@ -18,6 +19,7 @@ app.use('/storage', express.static(path.join(__dirname, 'storage')))
 
 //Routers
 app.use('/content', contentRouter)
+app.use('/playlists', playlistsRouter)
 app.use('/auth', authRouter);
 app.use('/', feedRouter);
 

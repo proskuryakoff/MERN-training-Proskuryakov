@@ -2,8 +2,10 @@ import React from 'react'
 import Card from '../Card/Card'
 
 export const PostsList = ({ posts }) => {
-  if (!posts.length) {
+  if (!posts.length && window.location.href === 'http://localhost:3000/') {
     return <p>We have no posts yet!</p>
+  } else if (!posts.length) {
+    return <p>No posts found!</p>
   }
 
   return (

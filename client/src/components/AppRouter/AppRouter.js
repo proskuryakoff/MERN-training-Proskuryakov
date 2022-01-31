@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import {Routes, Route, Navigate} from 'react-router-dom';
-import { authRoutes, publicRoutes } from "../../Routes";
+import { adminRoutes, authRoutes, publicRoutes } from "../../Routes";
 import Layout from '../Layout/Layout';
 import ContentPage from "../../pages/ContentPage/ContentPage";
 
@@ -11,7 +11,10 @@ export const AppRouter = () => {
     return (
         <Layout>
             <Routes>
-                {isAuthenticated && authState.roles.includes("ADMIN") && authRoutes.map(({path, Element}) => 
+                {isAuthenticated && authState.roles.includes("ADMIN") && adminRoutes.map(({path, Element}) => 
+                    <Route key={path} path={path} element={Element} exact/>
+                )}
+                {isAuthenticated && authRoutes.map(({path, Element}) => 
                     <Route key={path} path={path} element={Element} exact/>
                 )}
                 {publicRoutes.map(({path, Element}) => 

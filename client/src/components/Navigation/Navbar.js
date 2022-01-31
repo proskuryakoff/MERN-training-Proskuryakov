@@ -37,7 +37,7 @@ const Navbar = (props) => {
             {isAuthenticated 
             ? <div className='auth-nav'>
                 <NavLink to="#" className='nav-link'>{authState.username}</NavLink>
-                <NavLink to="#" className='nav-link'>Playlists</NavLink>
+                <NavLink to="/playlists" className='nav-link'>Playlists</NavLink>
                 <NavLink to='/auth/logout' onClick={logoutHandler} className='nav-link'>Logout</NavLink>
               </div>
             : <div className='auth-nav'>
