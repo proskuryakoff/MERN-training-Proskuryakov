@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useNavigate } from "react-router-dom";
 import { getContent, loadVideo, editPost, deletePost, likePost, leaveComment, incrementViews} from '../../actions/posts'
+import { getPlaylists } from '../../actions/playlists'
 import ReactPlayer from 'react-player'
 import Loader from '../../components/Loader/Loader';
 import Button from '../../components/Button/Button';
 import Input from '../../components/Input/Input'
 import TextArea from '../../components/TextArea/TextArea';
+import Modal from '../../components/Modal/Modal';
 import Form from '../../components/Form/Form';
 import { FormatDate } from '../../utils/FormatDate';
 import './ContentPage.css'
@@ -24,6 +26,7 @@ const ContentPage = () => {
     content: null
   });
   const [isEditing, setEdit] = useState(false)
+  const [modalActive, setModalActive] = useState(false)
   const postId = useParams().id;
   useEffect(() => {
     dispatch(getContent('/content/' + postId))
@@ -31,6 +34,7 @@ const ContentPage = () => {
   }, [postId, dispatch])
   const postState = useSelector((state) => state.posts);
   const authState = useSelector((state) => state.auth);
+  const playlistsState = useSelector((state) => state.playlists);
   const isAuthenticated = !!authState.token;
   const contentPath = 'http://localhost:4000/content/' + postId + '/media'
 
@@ -121,6 +125,13 @@ const ContentPage = () => {
     }
     dispatch(leaveComment(postId, {...commentForm}, headers))
   }
+  const modalStateHandler = () => {
+    const headers = {
+      'Authorization': 'Bearer ' + authState.token
+    }
+    dispatch(getPlaylists(headers))
+    setModalActive(true)
+  }
 
   const liked = postState.posts.liked
 
@@ -177,6 +188,22 @@ const ContentPage = () => {
 
   return (
     <div>
+      <Modal active={modalActive} setActive={setModalActive}>
+          <h3 className='modal-title'>Add to playlists</h3>
+          {playlistsState.playlists 
+          ? 
+          playlistsState.playlists.map((playlist) => {
+            return (
+              <div className='modal-playlist' key={playlist._id}>
+                  <Input type='checkbox' value={playlist._id}/>
+                  <div>{playlist.name}</div>
+              </div>
+            )
+          })
+          : 
+          <div>You have no playlists yet</div>}
+          <Button className='Button'>Add to Playlists</Button>
+      </Modal>
       {isAuthenticated && authState.roles.includes("ADMIN") 
       ? 
         <div className='content-admin-panel'>
@@ -201,11 +228,12 @@ const ContentPage = () => {
           controlsList="nodownload"
           onStart = {startHandler}
        />
-       : <p className='limit-notification'>You have viewed/listened more than 10 videos/audios</p>}
+       : <p className='limit-notification'>You have viewed/listened more than 10 records</p>}
        <div className='content-header'>
           <h1 className='content-title'>{postState.posts.title}</h1>
           <Button
             className='Button'
+            onClick={modalStateHandler}
           >+ Add to Playlist</Button>
        </div>
         

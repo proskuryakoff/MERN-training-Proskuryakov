@@ -65,3 +65,12 @@
     font-size: 1.3em;
     margin: 100px 0;
 }
+
+.modal-playlist {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.modal-title {
+    text-align: center;
+}
