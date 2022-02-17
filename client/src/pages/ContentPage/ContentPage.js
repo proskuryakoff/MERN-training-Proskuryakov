@@ -32,7 +32,6 @@ const ContentPage = () => {
     dispatch(getContent('/content/' + postId))
     dispatch(loadVideo('/content/' + postId + '/media'))
   }, [postId, dispatch])
-  
   const postState = useSelector((state) => state.posts);
   const authState = useSelector((state) => state.auth);
   const playlistsState = useSelector((state) => state.playlists);
