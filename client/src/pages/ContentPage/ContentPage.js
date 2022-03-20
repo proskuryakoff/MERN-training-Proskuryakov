@@ -19,6 +19,7 @@ const ContentPage = () => {
   const [commentForm,setCommentForm] = useState({
     comment: ''
   });
+  
   const [form,setForm] = useState({
     category: '',
     title: '',
